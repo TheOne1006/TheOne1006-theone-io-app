@@ -24,12 +24,9 @@ react-native run-ios
 * [Redux](http://redux.js.org/) and [ImmutableJS](https://facebook.github.io/immutable-js/) for safe and **Reasonaboutable**:tm: state management
 * [Redux Loop](https://github.com/raisemarketplace/redux-loop) for Elm-style controlled side effects
 * [React Navigation](https://reactnavigation.org/) for awesome navigation with 60fps transitions
-* Disk-persisted application state caching for offline support and snappy startup performance
-* Clean and testable service layer for interacting with RESTful APIs
-* :warning: Sample app to show how to wire it all together
-* :star: JSON Web Token authentication
-* :star: Multi-environment configuration (dev, staging, production) for iOS and Android
-* :star: Built-in error handling and customizable error screens
+* flow
+* immutable
+
 
 ### Testing Setup
 

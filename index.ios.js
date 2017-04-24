@@ -1,9 +1,11 @@
-import {Provider} from 'react-redux';
+import React, { Component } from 'react';
+import { AppRegistry } from 'react-native';
+import { Provider } from 'react-redux';
+
+import './src/utils/setup';
 import store from './src/redux/store';
 import AppViewContainer from './src/modules/AppViewContainer';
 
-import React, {Component} from 'react';
-import {AppRegistry} from 'react-native';
 
 class theoneIoApp extends Component {
   render() {

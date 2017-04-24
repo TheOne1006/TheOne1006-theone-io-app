@@ -1,23 +1,34 @@
-import React, {PropTypes, Component} from 'react';
-import {View, StyleSheet, StatusBar, ActivityIndicator} from 'react-native';
+/**
+ * @flow
+ */
+
+import React, { PropTypes, Component } from 'react';
+import { View, StyleSheet, StatusBar, ActivityIndicator } from 'react-native';
 import NavigatorViewContainer from './navigator/NavigatorViewContainer';
 import * as snapshotUtil from '../utils/snapshot';
 import * as SessionStateActions from '../modules/session/SessionState';
 import store from '../redux/store';
 import DeveloperMenu from '../components/DeveloperMenu';
 
+const styles = StyleSheet.create({
+  centered: {
+    flex: 1,
+    alignSelf: 'auto',
+  },
+});
+
 class AppView extends Component {
   static displayName = 'AppView';
 
   static propTypes = {
     isReady: PropTypes.bool.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
     snapshotUtil.resetSnapshot()
-      .then(snapshot => {
-        const {dispatch} = this.props;
+      .then((snapshot) => {
+        const { dispatch } = this.props;
 
         if (snapshot) {
           dispatch(SessionStateActions.resetSessionStateFromSnapshot(snapshot));
@@ -34,27 +45,24 @@ class AppView extends Component {
   render() {
     if (!this.props.isReady) {
       return (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <ActivityIndicator style={styles.centered} />
         </View>
       );
     }
 
     return (
-      <View style={{flex: 1}}>
-        <StatusBar backgroundColor='#455a64' barStyle='light-content' />
+      <View style={{ flex: 1 }}>
+        <StatusBar
+          translucent
+          backgroundColor="rgba(0, 0, 0, 0.2)"
+          barStyle="light-content"
+        />
         <NavigatorViewContainer />
         {__DEV__ && <DeveloperMenu />}
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  centered: {
-    flex: 1,
-    alignSelf: 'center'
-  }
-});
 
 export default AppView;

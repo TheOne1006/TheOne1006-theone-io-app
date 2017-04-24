@@ -13,8 +13,7 @@
     "React Native",
     "Starter Kit",
     "Bitrise",
-    "Redux",
-    "Auth0"
+    "Redux"
   ],
   "version": "1.0.0",
   "private": false,
@@ -26,7 +25,9 @@
     "lint": "eslint src test",
     "coverage": "rimraf coverage && jest --coverage",
     "version": "support/version-ios.sh",
-    "postinstall": "rndebugger-open"
+    "postinstall": "rndebugger-open",
+    "flow-typed-install": "flow-typed install",
+    "flow": "node_modules/.bin/flow"
   },
   "jest": {
     "preset": "react-native",
@@ -49,6 +50,7 @@
     "react-native-vector-icons": "^4.0.0",
     "react-navigation": "^1.0.0-beta.7",
     "react-redux": "^4.4.5",
+    "react-relay": "^0.10.0",
     "redux": "^3.4.0",
     "redux-logger": "^2.6.1",
     "redux-loop-symbol-ponyfill": "^2.2.0",
@@ -65,10 +67,17 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.9.0",
     "enzyme": "^2.2.0",
-    "eslint": "^3.10.1",
-    "eslint-plugin-babel": "^3.2.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-flowtype": "^2.32.1",
+    "eslint-plugin-flowtype-errors": "^3.0.3",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.7.1",
     "fetch-mock": "^5.5.0",
+    "flow-bin": "0.38.0",
+    "flow-typed": "^2.1.1",
     "istanbul": "1.0.0-alpha.2",
     "jest": "^17.0.2",
     "react-addons-test-utils": "~15.4.2",

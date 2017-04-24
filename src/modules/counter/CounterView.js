@@ -1,10 +1,10 @@
-import React, {PropTypes, Component} from 'react';
+import React, { PropTypes, Component } from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
   Image,
   Text,
-  View
+  View,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -15,10 +15,10 @@ class CounterView extends Component {
   static navigationOptions = {
     title: 'Counter',
     tabBar: () => ({
-      icon: (props) => (
-        <Icon name='plus-one' size={24} color={props.tintColor} />
-      )
-    })
+      icon: props => (
+        <Icon name="plus-one" size={24} color={props.tintColor} />
+      ),
+    }),
   }
 
   static propTypes = {
@@ -47,7 +47,7 @@ class CounterView extends Component {
   };
 
   bored = () => {
-    this.props.navigate({routeName: 'Color'});
+    this.props.navigate({ routeName: 'Color' });
   };
 
   renderUserInfo = () => {

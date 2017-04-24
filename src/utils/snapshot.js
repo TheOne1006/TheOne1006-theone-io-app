@@ -1,23 +1,7 @@
-import {AsyncStorage} from 'react-native';
-import {fromJS} from 'immutable';
+import { AsyncStorage } from 'react-native';
+import { fromJS } from 'immutable';
+
 const STATE_STORAGE_KEY = 'theoneIoAppAppState:Latest';
-
-export async function resetSnapshot() {
-  const state = await rehydrate();
-  if (state) {
-    return fromJS(state);
-  }
-
-  return null;
-}
-
-export async function saveSnapshot(state) {
-  await persist(state.toJS());
-}
-
-export async function clearSnapshot() {
-  await clear();
-}
 
 /**
  * Saves provided state object to async storage
@@ -55,4 +39,22 @@ async function clear() {
   } catch (e) {
     console.error('Error clearing peristed application state', e);
   }
+}
+
+
+export async function resetSnapshot() {
+  const state = await rehydrate();
+  if (state) {
+    return fromJS(state);
+  }
+
+  return null;
+}
+
+export async function saveSnapshot(state) {
+  await persist(state.toJS());
+}
+
+export async function clearSnapshot() {
+  await clear();
 }

@@ -1,16 +1,19 @@
-import {Provider} from 'react-redux';
+/**
+ * @flow
+ */
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { AppRegistry, BackAndroid } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import store from './src/redux/store';
 import AppViewContainer from './src/modules/AppViewContainer';
-import React, {Component} from 'react';
-import {AppRegistry, BackAndroid} from 'react-native';
-import {NavigationActions} from 'react-navigation';
 
 class theoneIoApp extends Component {
   componentWillMount() {
     BackAndroid.addEventListener('hardwareBackPress', this.navigateBack);
   }
 
-  navigateBack() {
+  navigateBack = () => {
     const navigatorState = store.getState().get('navigatorState');
 
     const currentStackScreen = navigatorState.get('index');
