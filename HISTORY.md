@@ -6,3 +6,4 @@
 > 20170425
 
 * react-navigation
+* debug-react-navigation 侧边栏冲突 => null

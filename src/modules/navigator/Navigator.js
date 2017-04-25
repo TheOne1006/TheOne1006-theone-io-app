@@ -1,9 +1,11 @@
-import { Platform } from 'react-native';
-import { TabNavigator, StackNavigator } from 'react-navigation';
+import React from 'react';
+import { Platform, ScrollView, Text, Button } from 'react-native';
+import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import CounterViewContainer from '../counter/CounterViewContainer';
 import ColorViewContainer from '../colors/ColorViewContainer';
-import DemoView from '../demo/DemoView';
+import DemoViewContainer from '../demo/DemoViewContainer';
 
 const headerColor = '#39babd';
 const activeColor = 'white';
@@ -12,9 +14,10 @@ const activeColor = 'white';
 export const MainScreenNavigator = TabNavigator({
   Counter: { screen: CounterViewContainer },
   Color: { screen: ColorViewContainer },
-  Demo: { screen: DemoView },
+  Demo: { screen: DemoViewContainer },
 }, {
   tabBarOptions: {
+    activeTintColor: '#e91e63',
     ...Platform.select({
       android: {
         activeTintColor: activeColor,
@@ -25,16 +28,24 @@ export const MainScreenNavigator = TabNavigator({
   },
 });
 
-MainScreenNavigator.navigationOptions = {
-  title: 'Pepperoni App Template',
+MainScreenNavigator.navigationOptions = () => ({
+  title: '首页',
   header: {
+    left: (<Icon.Button
+      onPress={() => console.log('onPress')}
+      name="dehaze"
+      size={24}
+      color="#fff"
+      style={{ paddingLeft: 5 }}
+      backgroundColor="transparent"
+    />),
     titleStyle: { color: 'white' },
     style: {
       backgroundColor: headerColor,
       elevation: 0, // disable header elevation when TabNavigator visible
     },
   },
-};
+});
 
 // Root navigator is a StackNavigator
 const AppNavigator = StackNavigator({
@@ -42,4 +53,28 @@ const AppNavigator = StackNavigator({
   InfiniteColorStack: { screen: ColorViewContainer },
 });
 
-export default AppNavigator;
+class MyNotificationsScreen extends React.Component {
+  static navigationOptions = {
+    drawerLabel: 'Notifications',
+  };
+
+  render() {
+    return (
+      <Button
+        onPress={() => this.props.navigation.goBack()}
+        title="Go back home"
+      />
+    );
+  }
+}
+
+const AppNavigatorWithDrawer = DrawerNavigator({
+  Home: {
+    screen: AppNavigator,
+  },
+  Notifications: {
+    screen: MyNotificationsScreen,
+  },
+});
+
+export default AppNavigatorWithDrawer;

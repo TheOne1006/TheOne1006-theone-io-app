@@ -14,6 +14,20 @@ class CounterView extends Component {
 
   static navigationOptions = {
     title: 'Counter',
+    header: navigation => ({
+      left: (<Icon.Button
+        onPress={() => navigation.navigate('DrawerOpen')}
+        name="dehaze"
+        size={24}
+        color="#fff"
+        style={{ paddingLeft: 5 }}
+        backgroundColor="transparent"
+      />),
+      tintColor: 'white',
+      style: {
+        backgroundColor: '#39babd',
+      },
+    }),
     tabBar: () => ({
       icon: props => (
         <Icon name="plus-one" size={24} color={props.tintColor} />
@@ -29,9 +43,9 @@ class CounterView extends Component {
     counterStateActions: PropTypes.shape({
       increment: PropTypes.func.isRequired,
       reset: PropTypes.func.isRequired,
-      random: PropTypes.func.isRequired
+      random: PropTypes.func.isRequired,
     }).isRequired,
-    navigate: PropTypes.func.isRequired
+    navigate: PropTypes.func.isRequired,
   };
 
   increment = () => {
@@ -74,7 +88,7 @@ class CounterView extends Component {
 
   render() {
     const loadingStyle = this.props.loading
-      ? {backgroundColor: '#eee'}
+      ? { backgroundColor: '#eee' }
       : null;
 
     return (

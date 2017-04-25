@@ -14,7 +14,7 @@ export function resetSessionStateFromSnapshot(state) {
 
 export function initializeSessionState() {
   return {
-    type: INITIALIZE_STATE
+    type: INITIALIZE_STATE,
   };
 }
 

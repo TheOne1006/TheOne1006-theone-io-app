@@ -33,6 +33,10 @@ export default function mainReducer(state, action) {
     ? namespacedReducer(action.payload, action)
     : namespacedReducer(state || void 0, action);
 
+
+  console.log(action.type);
+  console.log(nextState.toJS());
+
   // enforce the state is immutable
   return loop(fromJS(nextState), effects);
 }

@@ -15,5 +15,6 @@ export default function NavigatorReducer(state, action) {
     return fromJS(AppNavigator.router.getStateForAction(action, state.toJS()));
   }
 
+
   return state;
 }
