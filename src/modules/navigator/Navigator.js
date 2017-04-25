@@ -3,6 +3,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import CounterViewContainer from '../counter/CounterViewContainer';
 import ColorViewContainer from '../colors/ColorViewContainer';
+import DemoView from '../demo/DemoView';
 
 const headerColor = '#39babd';
 const activeColor = 'white';
@@ -11,6 +12,7 @@ const activeColor = 'white';
 export const MainScreenNavigator = TabNavigator({
   Counter: { screen: CounterViewContainer },
   Color: { screen: ColorViewContainer },
+  Demo: { screen: DemoView },
 }, {
   tabBarOptions: {
     ...Platform.select({
