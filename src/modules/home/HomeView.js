@@ -4,10 +4,10 @@ import {
   View,
   StyleSheet,
   ListView,
-  TouchableOpacity,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Banner from '../banner/BannerView';
 
 export default class HomeView extends Component {
   static propTypes = {
@@ -48,8 +48,7 @@ export default class HomeView extends Component {
 
 const styles = StyleSheet.create({
   listview: {
-    backgroundColor: '#B0C4DE',
-  },
+    backgroundColor: '#B0C4DE',  },
   header: {
     height: 40,
     justifyContent: 'center',
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const NUM_SECTIONS = 100;
+const NUM_SECTIONS = 10;
 const NUM_ROWS_PER_SECTION = 10;
 
 class ListViewPagingExample extends Component {
@@ -150,21 +149,7 @@ class ListViewPagingExample extends Component {
     );
   };
 
-  renderHeader = () => {
-    const headerLikeText = this.state.headerPressCount % 2 ?
-      <View><Text style={styles.text}>1 Like</Text></View> :
-      null;
-    return (
-      <TouchableOpacity onPress={this._onPressHeader} style={styles.header}>
-        {headerLikeText}
-        <View>
-          <Text style={styles.text}>
-            Table Header (click me)
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
+  renderHeader = () => (<Banner />)
 
   renderFooter = () => {
     return (
@@ -181,7 +166,7 @@ class ListViewPagingExample extends Component {
       <ListView
         style={styles.listview}
         dataSource={this.state.dataSource}
-        onChangeVisibleRows={(visibleRows, changedRows) => console.log({visibleRows, changedRows})}
+        onChangeVisibleRows={(visibleRows, changedRows) => console.log({visibleRows, changedRows })}
         renderHeader={this.renderHeader}
         renderFooter={this.renderFooter}
         renderSectionHeader={this.renderSectionHeader}

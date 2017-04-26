@@ -12,3 +12,5 @@
 > 20170426
 
 * 解决 react-navigation 侧边栏问题
+* 增加 Banner
+* 增加 theme 机制
