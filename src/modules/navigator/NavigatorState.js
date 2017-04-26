@@ -12,7 +12,9 @@ export default function NavigatorReducer(state, action) {
 
   // Is this a navigation action that we should act upon?
   if (includes(NavigationActions, action.type)) {
-    return fromJS(AppNavigator.router.getStateForAction(action, state.toJS()));
+    // FIXME: stateObj 可能返回 null
+    const stateObj = AppNavigator.router.getStateForAction(action, state.toJS());
+    return stateObj ? fromJS(stateObj) : state;
   }
 
 

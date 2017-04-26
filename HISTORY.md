@@ -7,3 +7,8 @@
 
 * react-navigation
 * debug-react-navigation 侧边栏冲突 => null
+
+
+> 20170426
+
+* 解决 react-navigation 侧边栏问题

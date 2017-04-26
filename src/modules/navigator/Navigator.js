@@ -1,20 +1,21 @@
 import React from 'react';
-import { Platform, ScrollView, Text, Button } from 'react-native';
+import { Platform } from 'react-native';
 import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import CounterViewContainer from '../counter/CounterViewContainer';
 import ColorViewContainer from '../colors/ColorViewContainer';
-import DemoViewContainer from '../demo/DemoViewContainer';
+import HomeContainer from '../home/HomeContainer';
 
 const headerColor = '#39babd';
 const activeColor = 'white';
 
+
 // TabNavigator is nested inside StackNavigator
 export const MainScreenNavigator = TabNavigator({
+  Main: { screen: HomeContainer },
   Counter: { screen: CounterViewContainer },
   Color: { screen: ColorViewContainer },
-  Demo: { screen: DemoViewContainer },
 }, {
   tabBarOptions: {
     activeTintColor: '#e91e63',
@@ -51,29 +52,15 @@ MainScreenNavigator.navigationOptions = () => ({
 const AppNavigator = StackNavigator({
   Home: { screen: MainScreenNavigator },
   InfiniteColorStack: { screen: ColorViewContainer },
+}, {
+  initialRouteName: 'Home',
+  headerMode: 'screen',
+  mode: Platform.OS === 'ios' ? 'modal' : 'card',
 });
-
-class MyNotificationsScreen extends React.Component {
-  static navigationOptions = {
-    drawerLabel: 'Notifications',
-  };
-
-  render() {
-    return (
-      <Button
-        onPress={() => this.props.navigation.goBack()}
-        title="Go back home"
-      />
-    );
-  }
-}
 
 const AppNavigatorWithDrawer = DrawerNavigator({
   Home: {
     screen: AppNavigator,
-  },
-  Notifications: {
-    screen: MyNotificationsScreen,
   },
 });
 
