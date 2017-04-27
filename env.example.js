@@ -3,4 +3,5 @@
 // 2. Fill in the blanks
 
 module.exports = {
+  serverURL: 'https://localhost:3200'
 };

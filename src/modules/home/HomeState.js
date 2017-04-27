@@ -4,11 +4,6 @@ import { loop, Effects } from 'redux-loop-symbol-ponyfill';
 import createHelpers from '../../redux/createHelpers';
 
 const { graphqlRequest } = createHelpers();
-// Initial state
-const initialState = fromJS({
-  results: fromJS([]),
-  loading: false,
-});
 
 const recommendQuery = `query getRecommendArticles($limit: Int!){
           allArticles(order: "isRecommend desc", limit: $limit) {
@@ -64,11 +59,58 @@ export function resultsResponse() {
   const recommendPromise = graphqlRequest(recommendQuery, recommendVariables);
   const catesArticlesPromise = graphqlRequest(allCatesArticlesQuery, allCatesArticlesVariables);
 
-  return new Promise.all([recommendPromise, catesArticlesPromise])
-    .then((recommendResults, atesArticlesResults) => {
-      // TODO: coding
-    });
+  return Promise.all([recommendPromise, catesArticlesPromise])
+    .then(([recommendResults, catesArticlesResults]) => {
+      const reqError = recommendResults.error || catesArticlesResults.error;
+      if (reqError) {
+        return {
+          type: RESULTS_FAIL,
+        };
+      }
+
+      let resultArr = [];
+      const recommendArticles = recommendResults.data &&
+       recommendResults.data.allArticles &&
+       recommendResults.data.allArticles.articles;
+
+      if (resultArr) {
+        resultArr.push({
+          title: 'Top',
+          articles: recommendArticles,
+        });
+      }
+
+      // 所有分类
+      const allCates = catesArticlesResults.data &&
+        catesArticlesResults.data.allCates &&
+        catesArticlesResults.data.allCates.cates;
+
+      if (allCates) {
+        const catesSectionsArr = allCates.map(item => ({
+          title: item.name,
+          articles: (item.articlesConnection && item.articlesConnection.articles) || [],
+        }));
+        resultArr = resultArr.concat(catesSectionsArr);
+      }
+
+      return {
+        type: RESULTS_RESPONSE,
+        payload: {
+          results: resultArr,
+        },
+      };
+    })
+    .catch(() => ({
+      type: RESULTS_FAIL,
+    }));
 }
+
+// Initial state
+const initialState = fromJS({
+  results: fromJS([]),
+  loading: false,
+  loaded: false,
+});
 
 // Reducer
 export default function HomeStateReducer(state = initialState, action = {}) {
@@ -82,6 +124,7 @@ export default function HomeStateReducer(state = initialState, action = {}) {
     case RESULTS_RESPONSE:
       return state.merge({
         loading: false,
+        loaded: true,
         results: state.get('results').mergeDeep(action.payload.results),
       });
 
