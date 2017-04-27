@@ -11,8 +11,9 @@ export default createLogger({
   stateTransformer: state => state.toJS(),
 
   // transform immutable action payloads to plain objects
-  actionTransformer: action =>
+  actionTransformer: action => (
     action && action.payload && action.payload.toJS
-      ? {...action, payload: action.payload.toJS()}
+      ? { ...action, payload: action.payload.toJS() }
       : action
+  ),
 });

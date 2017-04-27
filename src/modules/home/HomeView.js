@@ -7,11 +7,15 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import styles from './themes/light';
 import Banner from '../banner/BannerView';
+
 
 export default class HomeView extends Component {
   static propTypes = {
     navigate: PropTypes.func.isRequired,
+    resultsRequest: PropTypes.func.isRequired,
   };
 
   static navigationOptions = {
@@ -39,59 +43,17 @@ export default class HomeView extends Component {
       ),
     }),
   }
+
+  componentWillMount() {
+    const { resultsRequest } = this.props;
+    resultsRequest();
+  }
   render() {
     return (
       <ListViewPagingExample />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  listview: {
-    backgroundColor: '#B0C4DE',  },
-  header: {
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#3B5998',
-    flexDirection: 'row',
-  },
-  text: {
-    color: 'white',
-    paddingHorizontal: 8,
-  },
-  rowText: {
-    color: '#888888',
-  },
-  thumbText: {
-    fontSize: 20,
-    color: '#888888',
-  },
-  buttonContents: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 5,
-    marginVertical: 3,
-    padding: 5,
-    backgroundColor: '#EAEAEA',
-    borderRadius: 3,
-    paddingVertical: 10,
-  },
-  img: {
-    width: 64,
-    height: 64,
-    marginHorizontal: 10,
-    backgroundColor: 'transparent',
-  },
-  section: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    padding: 6,
-    backgroundColor: '#5890ff',
-  },
-});
 
 const NUM_SECTIONS = 10;
 const NUM_ROWS_PER_SECTION = 10;
@@ -151,16 +113,6 @@ class ListViewPagingExample extends Component {
 
   renderHeader = () => (<Banner />)
 
-  renderFooter = () => {
-    return (
-      <View style={styles.header}>
-        <Text onPress={() => console.log('Footer!')} style={styles.text}>
-          Table Footer
-        </Text>
-      </View>
-    );
-  };
-
   render() {
     return (
       <ListView
@@ -168,7 +120,6 @@ class ListViewPagingExample extends Component {
         dataSource={this.state.dataSource}
         onChangeVisibleRows={(visibleRows, changedRows) => console.log({visibleRows, changedRows })}
         renderHeader={this.renderHeader}
-        renderFooter={this.renderFooter}
         renderSectionHeader={this.renderSectionHeader}
         renderRow={this.renderRow}
         initialListSize={10}

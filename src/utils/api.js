@@ -1,3 +1,8 @@
+/**
+ * @flow
+ */
+/* eslint no-underscore-dangle: ["error", { "allow": ["_bodyInit"] }] */
+
 import Promise from 'bluebird';
 import HttpError from 'standard-http-error';
 import { getConfiguration } from '../utils/configuration';
@@ -5,8 +10,23 @@ import { getAuthenticationToken } from '../utils/authentication';
 
 const EventEmitter = require('event-emitter');
 
+/**
+ * All HTTP errors are emitted on this channel for interested listeners
+ */
+export const errors = new EventEmitter();
+
 const TIMEOUT = 6000;
 
+
+/**
+ * Takes a relative path and makes it a full URL to API server
+ */
+export function url(path: string, baseRoot?: ?string) {
+  const apiRoot = baseRoot || getConfiguration('API_ROOT');
+  return path.indexOf('/') === 0
+    ? apiRoot + path
+    : `${apiRoot}/${path}`;
+}
 
 async function bodyOf(requestPromise) {
   try {
@@ -17,18 +37,83 @@ async function bodyOf(requestPromise) {
   }
 }
 
+function getRequestHeaders(body, token) {
+  const headers = body
+    ? { Accept: 'application/json', 'Content-Type': 'application/json' }
+    : { Accept: 'application/json' };
+
+  if (token) {
+    return { ...headers, Authorization: token };
+  }
+
+  return headers;
+}
+
+
+/**
+ * Rejects a promise after `ms` number of milliseconds, it is still pending
+ */
+function timeout(promise, ms) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error('timeout')), ms);
+    promise
+      .then((response) => {
+        clearTimeout(timer);
+        resolve(response);
+      })
+      .catch(reject);
+  });
+}
+
+// 尝试从错误信息中提取有用信息
+async function getErrorMessageSafely(response) {
+  try {
+    const body = await response.text();
+    if (!body) {
+      return '';
+    }
+
+    // Optimal case is JSON with a defined message property
+    const payload = JSON.parse(body);
+    if (payload && payload.message) {
+      return payload.message;
+    }
+
+    // Should that fail, return the whole response body as text
+    return body;
+  } catch (e) {
+    // Unreadable body, return whatever the server returned
+    return response._bodyInit;
+  }
+}
+
+/**
+ * Make best effort to turn a HTTP error or a runtime exception to meaningful error log message
+ */
+function logError(error: Object, endpoint, method) {
+  if (error.status) {
+    const summary = `(${error.status} ${error.statusText}): ${error._bodyInit}`;
+    console.error(`API request ${method.toUpperCase()} ${endpoint} responded with ${summary}`);
+  } else {
+    console.error(`API request ${method.toUpperCase()} ${endpoint} failed with message "${error.message}"`);
+  }
+}
+
+
 /**
  * Constructs and fires a HTTP request
  */
-async function sendRequest(method, path, body) {
-
+async function sendRequest(method: string,
+  path: string,
+  body: ?Object,
+  baseRoot: ?string) {
   try {
-    const endpoint = url(path);
+    const endpoint = url(path, baseRoot);
     const token = await getAuthenticationToken();
     const headers = getRequestHeaders(body, token);
     const options = body
-      ? {method, headers, body: JSON.stringify(body)}
-      : {method, headers};
+      ? { method, headers, body: JSON.stringify(body) }
+      : { method, headers };
 
     return timeout(fetch(endpoint, options), TIMEOUT);
   } catch (e) {
@@ -50,8 +135,8 @@ async function handleResponse(path, response) {
       const error = new HttpError(status, message);
 
       // emit events on error channel, one for status-specific errors and other for all errors
-      errors.emit(status.toString(), {path, message: error.message});
-      errors.emit('*', {path, message: error.message}, status);
+      errors.emit(status.toString(), { path, message: error.message });
+      errors.emit('*', { path, message: error.message }, status);
 
       throw error;
     }
@@ -61,24 +146,14 @@ async function handleResponse(path, response) {
     return {
       status: response.status,
       headers: response.headers,
-      body: responseBody ? JSON.parse(responseBody) : null
+      body: responseBody ? JSON.parse(responseBody) : null,
     };
   } catch (e) {
     throw e;
   }
 }
 
-function getRequestHeaders(body, token) {
-  const headers = body
-    ? {'Accept': 'application/json', 'Content-Type': 'application/json'}
-    : {'Accept': 'application/json'};
-
-  if (token) {
-    return {...headers, Authorization: token};
-  }
-
-  return headers;
-}
+type MethodType = 'get' | 'post' | 'put' | 'delete';
 
 /**
  * Make arbitrary fetch request to a path relative to API root url
@@ -86,16 +161,17 @@ function getRequestHeaders(body, token) {
  * @param {String} path Relative path to the configured API endpoint
  * @param {Object} body Anything that you can pass to JSON.stringify
  * @param {Boolean} suppressRedBox If true, no warning is shown on failed request
+ * @param {String} baseRoot base site
  */
-export async function request(method, path, body, suppressRedBox) {
+export async function request(method: MethodType, path: string, body: ?Object,
+  suppressRedBox: boolean, baseRoot: ?string) {
   try {
-    const response = await sendRequest(method, path, body, suppressRedBox);
+    const response = await sendRequest(method, path, body, baseRoot);
     return handleResponse(
       path,
-      response
+      response,
     );
-  }
-  catch (error) {
+  } catch (error) {
     if (!suppressRedBox) {
       logError(error, url(path), method);
     }
@@ -104,17 +180,12 @@ export async function request(method, path, body, suppressRedBox) {
 }
 
 /**
- * All HTTP errors are emitted on this channel for interested listeners
- */
-export const errors = new EventEmitter();
-
-/**
  * GET a path relative to API root url.
  * @param {String}  path Relative path to the configured API endpoint
  * @param {Boolean} suppressRedBox If true, no warning is shown on failed request
  * @returns {Promise} of response body
  */
-export async function get(path, suppressRedBox) {
+export async function get(path: string, suppressRedBox: boolean) {
   return bodyOf(request('get', path, null, suppressRedBox));
 }
 
@@ -125,7 +196,7 @@ export async function get(path, suppressRedBox) {
  * @param {Boolean} suppressRedBox If true, no warning is shown on failed request
  * @returns {Promise}  of response body
  */
-export async function post(path, body, suppressRedBox) {
+export async function post(path: string, body: ?Object, suppressRedBox: boolean) {
   return bodyOf(request('post', path, body, suppressRedBox));
 }
 
@@ -136,7 +207,7 @@ export async function post(path, body, suppressRedBox) {
  * @param {Boolean} suppressRedBox If true, no warning is shown on failed request
  * @returns {Promise}  of response body
  */
-export async function put(path, body, suppressRedBox) {
+export async function put(path: string, body: ?Object, suppressRedBox: boolean) {
   return bodyOf(request('put', path, body, suppressRedBox));
 }
 
@@ -146,68 +217,13 @@ export async function put(path, body, suppressRedBox) {
  * @param {Boolean} suppressRedBox If true, no warning is shown on failed request
  * @returns {Promise}  of response body
  */
-export async function del(path, suppressRedBox) {
+export async function del(path: string, suppressRedBox: boolean) {
   return bodyOf(request('delete', path, null, suppressRedBox));
 }
 
-/**
- * Takes a relative path and makes it a full URL to API server
- */
-export function url(path) {
-  const apiRoot = getConfiguration('API_ROOT');
-  return path.indexOf('/') === 0
-    ? apiRoot + path
-    : apiRoot + '/' + path;
-}
 
-// try to get the best possible error message out of a response
-// without throwing errors while parsing
-async function getErrorMessageSafely(response) {
-  try {
-    const body = await response.text();
-    if (!body) {
-      return '';
-    }
-
-    // Optimal case is JSON with a defined message property
-    const payload = JSON.parse(body);
-    if (payload && payload.message) {
-      return payload.message;
-    }
-
-    // Should that fail, return the whole response body as text
-    return body;
-
-  } catch (e) {
-    // Unreadable body, return whatever the server returned
-    return response._bodyInit;
-  }
-}
-
-/**
- * Rejects a promise after `ms` number of milliseconds, it is still pending
- */
-function timeout(promise, ms) {
-  return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => reject(new Error('timeout')), ms);
-    promise
-      .then(response => {
-        clearTimeout(timer);
-        resolve(response);
-      })
-      .catch(reject);
-  });
-}
-
-/**
- * Make best effort to turn a HTTP error or a runtime exception to meaningful error log message
- */
-function logError(error, endpoint, method) {
-  if (error.status) {
-    const summary = `(${error.status} ${error.statusText}): ${error._bodyInit}`;
-    console.error(`API request ${method.toUpperCase()} ${endpoint} responded with ${summary}`);
-  }
-  else {
-    console.error(`API request ${method.toUpperCase()} ${endpoint} failed with message "${error.message}"`);
-  }
+export function createGraphqlRequest(suppressRedBox: boolean, baseRoot: string) {
+  return async function graphqlRequest(query: Object, variables: ?Object) {
+    return bodyOf(request('post', '', { query, variables }, suppressRedBox, baseRoot));
+  };
 }
