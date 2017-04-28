@@ -8,6 +8,7 @@ import {
   Text,
   View,
   ListView,
+  Image,
 } from 'react-native';
 
 import Banner from '../banner/BannerView';
@@ -58,8 +59,21 @@ class SectionList extends Component {
   }
 
   renderRow = (rowData: Object): React.Element<any> => (
-    <View>
-      <Text> {`${rowData.title}` } </Text>
+    <View style={styles.row}>
+      <View style={styles.content}>
+        <Text style={styles.rowTitle}>
+          {`${rowData.title}` }
+        </Text>
+        <Text style={styles.rowDesc}>
+          {`${rowData.descript}` }
+        </Text>
+      </View>
+      <Image
+        style={styles.thumbnail}
+        source={{
+          uri: `https:${rowData.thumbnail}`,
+        }}
+      />
     </View>
   );
 
@@ -82,6 +96,7 @@ class SectionList extends Component {
         dataSource={this.state.dataSource}
         onChangeVisibleRows={(visibleRows, changedRows) => console.log({visibleRows, changedRows })}
         renderHeader={this.renderHeader}
+        enableEmptySections
         renderSectionHeader={this.renderSectionHeader}
         renderRow={this.renderRow}
         initialListSize={10}
@@ -91,13 +106,6 @@ class SectionList extends Component {
       />
     );
   }
-
-  _onPressHeader = () => {
-    var config = layoutAnimationConfigs[Math.floor(this.state.headerPressCount / 2) % layoutAnimationConfigs.length];
-    LayoutAnimation.configureNext(config);
-    this.setState({headerPressCount: this.state.headerPressCount + 1});
-  };
-
 }
 
 export default SectionList;

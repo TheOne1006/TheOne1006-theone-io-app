@@ -13,8 +13,6 @@ const recommendQuery = `query getRecommendArticles($limit: Int!){
               title,
               keyWords,
               thumbnail,
-              content,
-              contentText,
               descript,
               createdAt,
               updatedAt,
@@ -33,8 +31,14 @@ const allCatesArticlesQuery = `query getAllCatesArticle($limit: Int!) {
       name,
       articlesConnection(limit: $limit) {
         articles {
+          id,
           _id,
           title,
+          keyWords,
+          thumbnail,
+          descript,
+          createdAt,
+          updatedAt,
         }
       }
     }

@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import CounterViewContainer from '../counter/CounterViewContainer';
 import ColorViewContainer from '../colors/ColorViewContainer';
 import HomeContainer from '../home/HomeContainer';
+import DrawerView from '../drawer/DrawerView';
 
 const headerColor = '#39babd';
 const activeColor = 'white';
@@ -62,6 +63,8 @@ const AppNavigatorWithDrawer = DrawerNavigator({
   Home: {
     screen: AppNavigator,
   },
+}, {
+  contentComponent: props => (<DrawerView {...props} />),
 });
 
 export default AppNavigatorWithDrawer;

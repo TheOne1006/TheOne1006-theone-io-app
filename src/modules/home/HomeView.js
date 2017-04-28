@@ -5,13 +5,10 @@ import React, { PropTypes, Component } from 'react';
 import {
   Text,
   View,
-  ListView,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import styles from './themes/light';
-import Banner from '../banner/BannerView';
 import SectionList from './SectionList';
 
 export default class HomeView extends Component {
@@ -25,9 +22,6 @@ export default class HomeView extends Component {
 
   static navigationOptions = {
     title: 'Home',
-    titleStyle: {
-      background: 'red',
-    },
     header: navigation => ({
       left: (<Icon.Button
         onPress={() => navigation.navigate('DrawerOpen')}
@@ -39,7 +33,7 @@ export default class HomeView extends Component {
       />),
       tintColor: 'white',
       style: {
-        backgroundColor: 'red',
+        backgroundColor: '#39babd',
       },
     }),
     tabBar: () => ({
@@ -50,8 +44,10 @@ export default class HomeView extends Component {
   }
 
   componentWillMount() {
-    const { resultsRequest } = this.props;
-    resultsRequest();
+    const { resultsRequest, loaded, loading } = this.props;
+    // if (!loaded && !loading) {
+      resultsRequest();
+    // }
   }
   render() {
     const { sections, loading, loaded } = this.props;

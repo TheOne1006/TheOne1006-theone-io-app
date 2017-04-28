@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 
 export const styleJson = {
   listview: {
-    backgroundColor: '#B0C4DE',
+    backgroundColor: '#FFFFFF',
   },
   header: {
     height: 40,
@@ -13,17 +13,6 @@ export const styleJson = {
     alignItems: 'center',
     backgroundColor: '#3B5998',
     flexDirection: 'row',
-  },
-  text: {
-    color: 'white',
-    paddingHorizontal: 8,
-  },
-  rowText: {
-    color: '#888888',
-  },
-  thumbText: {
-    fontSize: 20,
-    color: '#888888',
   },
   buttonContents: {
     flexDirection: 'row',
@@ -36,18 +25,40 @@ export const styleJson = {
     borderRadius: 3,
     paddingVertical: 10,
   },
-  img: {
-    width: 64,
-    height: 64,
-    marginHorizontal: 10,
-    backgroundColor: 'transparent',
-  },
   section: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
     padding: 6,
     backgroundColor: '#5890ff',
+  },
+  text: {
+    color: '#FFF',
+  },
+  row: {
+    flexDirection: 'row',
+    flex: 1,
+    padding: 6,
+    backgroundColor: '#ffffff',
+  },
+  rowTitle: {
+    fontSize: 16,
+  },
+  rowDesc: {
+    fontSize: 13,
+    color: '#1C1C1C',
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: 8,
+    justifyContent: 'space-around',
+    backgroundColor: 'transparent',
+  },
+  thumbnail: {
+    width: 120,
+    height: 90,
+    flex: 0,
+    backgroundColor: 'transparent',
   },
 };
 
