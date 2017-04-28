@@ -6,7 +6,9 @@ import {
   View,
   Text,
   Image,
+  ScrollView,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import styles from './themes/light';
 
@@ -23,9 +25,36 @@ class DrawerView extends Component {
           />
           <View style={styles.avatarContent} >
             <Text style={styles.avatarText}>
-              TheOne.io
+              TheOne.io - 个人博客
             </Text>
           </View>
+        </View>
+        <ScrollView>
+          <Text style={styles.avatarText}>
+            TheOne.io - 个人博客
+          </Text>
+        </ScrollView>
+        <View style={styles.footer}>
+          <Icon.Button
+            onPress={() => console.log('onPress')}
+            name="wb-sunny"
+            size={24}
+            color="#fff"
+            style={{ paddingLeft: 5 }}
+            backgroundColor="transparent"
+          >
+            白天
+          </Icon.Button>
+          <Icon.Button
+            onPress={() => console.log('onPress')}
+            name="brightness-2"
+            size={24}
+            color="#fff"
+            style={{ paddingLeft: 5 }}
+            backgroundColor="transparent"
+          >
+            夜间
+          </Icon.Button>
         </View>
       </View>
     );

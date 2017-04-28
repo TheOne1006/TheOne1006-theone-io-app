@@ -17,6 +17,7 @@ export const MainScreenNavigator = TabNavigator({
   Main: { screen: HomeContainer },
   Counter: { screen: CounterViewContainer },
   Color: { screen: ColorViewContainer },
+  Demo: { screen: DrawerView },
 }, {
   tabBarOptions: {
     activeTintColor: '#e91e63',

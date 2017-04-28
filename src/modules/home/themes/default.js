@@ -33,7 +33,7 @@ export const styleJson = {
     backgroundColor: '#5890ff',
   },
   text: {
-    color: '#FFF',
+    color: '#FFFFFF',
   },
   row: {
     flexDirection: 'row',

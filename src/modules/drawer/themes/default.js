@@ -6,9 +6,9 @@ import { StyleSheet } from 'react-native';
 export const styleJson = {
   root: {
     backgroundColor: 'slategrey',
+    // justifyContent: 'space-between',
     flex: 1,
     paddingTop: 50,
-    paddingBottom: 50,
     paddingLeft: 6,
     paddingRight: 6,
   },
@@ -16,16 +16,20 @@ export const styleJson = {
     flexDirection: 'row',
   },
   avatarThumbnail: {
-    height: 100,
-    width: 100,
-    borderRadius: 50,
+    height: 60,
+    width: 60,
+    borderRadius: 30,
+    backgroundColor: '#FFFFFF',
   },
   avatarContent: {
-    paddingTop: 20,
+    paddingLeft: 10,
+    justifyContent: 'space-around',
   },
   avatarText: {
     color: '#FFFFFF',
-    fontSize: 18,
+    fontSize: 15,
+  },
+  footer: {
   },
 };
 
