@@ -7,6 +7,7 @@ import CounterViewContainer from '../counter/CounterViewContainer';
 import ColorViewContainer from '../colors/ColorViewContainer';
 import HomeContainer from '../home/HomeContainer';
 import DrawerView from '../drawer/DrawerView';
+import CatesContainer from '../cates/CatesContainer';
 
 const headerColor = '#39babd';
 const activeColor = 'white';
@@ -17,7 +18,7 @@ export const MainScreenNavigator = TabNavigator({
   Main: { screen: HomeContainer },
   Counter: { screen: CounterViewContainer },
   Color: { screen: ColorViewContainer },
-  Demo: { screen: DrawerView },
+  Demo: { screen: CatesContainer },
 }, {
   tabBarOptions: {
     activeTintColor: '#e91e63',

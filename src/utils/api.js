@@ -223,7 +223,7 @@ export async function del(path: string, suppressRedBox: boolean) {
 
 
 export function createGraphqlRequest(suppressRedBox: boolean, baseRoot: string) {
-  return async function graphqlRequest(query: Object, variables: ?Object) {
+  return async function graphqlRequest(query: string, variables: ?Object) {
     return bodyOf(request('post', '', { query, variables }, suppressRedBox, baseRoot));
   };
 }

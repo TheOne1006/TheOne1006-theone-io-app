@@ -8,9 +8,9 @@ import {
   Text,
   View,
   ListView,
-  Image,
 } from 'react-native';
 
+import ArticleListItem from '../../components/ArticleListItem/ArticleListItem';
 import Banner from '../banner/BannerView';
 import styles from './themes/light';
 
@@ -47,6 +47,7 @@ class SectionList extends Component {
         dataBlob[article._id] = article;
         return article._id;
       });
+      return title;
     });
 
     this.setState({
@@ -59,22 +60,15 @@ class SectionList extends Component {
   }
 
   renderRow = (rowData: Object): React.Element<any> => (
-    <View style={styles.row}>
-      <View style={styles.content}>
-        <Text style={styles.rowTitle}>
-          {`${rowData.title}` }
-        </Text>
-        <Text style={styles.rowDesc}>
-          {`${rowData.descript}` }
-        </Text>
-      </View>
-      <Image
-        style={styles.thumbnail}
-        source={{
-          uri: `https:${rowData.thumbnail}`,
-        }}
-      />
-    </View>
+    <ArticleListItem
+      title={rowData.title}
+      descript={rowData.descript}
+      thumbnail={rowData.thumbnail}
+    />
+  );
+
+  renderSeparator = (sectionID: string, rowID: string) => (
+    <View key={`${sectionID}-${rowID}-separator`} style={styles.separator} />
   );
 
   renderSectionHeader = (sectionData: string, sectionID: string) => {
@@ -99,6 +93,7 @@ class SectionList extends Component {
         enableEmptySections
         renderSectionHeader={this.renderSectionHeader}
         renderRow={this.renderRow}
+        renderSeparator={this.renderSeparator}
         initialListSize={10}
         pageSize={4}
         scrollRenderAheadDistance={500}

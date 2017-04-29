@@ -33,6 +33,21 @@ class DrawerView extends Component {
           <Text style={styles.avatarText}>
             TheOne.io - 个人博客
           </Text>
+          <Text style={styles.avatarText}>
+            js
+          </Text>
+          <Text style={styles.avatarText}>
+            php
+          </Text>
+          <Text style={styles.avatarText}>
+            mysql
+          </Text>
+          <Text style={styles.avatarText}>
+            mongodb
+          </Text>
+          <Text style={styles.avatarText}>
+            Node.js
+          </Text>
         </ScrollView>
         <View style={styles.footer}>
           <Icon.Button
