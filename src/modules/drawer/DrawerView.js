@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   ScrollView,
+  TouchableHighlight,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -30,12 +31,13 @@ class DrawerView extends Component {
           </View>
         </View>
         <ScrollView>
-          <Text style={styles.avatarText}>
-            TheOne.io - 个人博客
-          </Text>
-          <Text style={styles.avatarText}>
-            js
-          </Text>
+          <TouchableHighlight style={styles.item}>
+            <View>
+              <Text style={styles.ItemText}>
+                js
+              </Text>
+            </View>
+          </TouchableHighlight>
           <Text style={styles.avatarText}>
             php
           </Text>

@@ -29,6 +29,15 @@ export const styleJson = {
     color: '#FFFFFF',
     fontSize: 15,
   },
+  item: {
+    height: 30,
+    paddingRight: 10,
+    paddingLeft: 10,
+  },
+  ItemText: {
+    color: '#FFFFFF',
+    fontSize: 24,
+  },
   footer: {
   },
 };
