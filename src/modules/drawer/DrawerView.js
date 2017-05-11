@@ -7,10 +7,11 @@ import {
   Text,
   Image,
   ScrollView,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import SwitchTheme from '../switchTheme/SwitchThemeContainer';
 import styles from './themes/light';
 
 const defaultAvatar = require('./imgs/defaultAvatar.png');
@@ -30,48 +31,31 @@ class DrawerView extends Component {
             </Text>
           </View>
         </View>
-        <ScrollView>
-          <TouchableHighlight style={styles.item}>
-            <View>
-              <Text style={styles.ItemText}>
-                js
-              </Text>
-            </View>
-          </TouchableHighlight>
-          <Text style={styles.avatarText}>
-            php
-          </Text>
-          <Text style={styles.avatarText}>
-            mysql
-          </Text>
-          <Text style={styles.avatarText}>
-            mongodb
-          </Text>
-          <Text style={styles.avatarText}>
-            Node.js
-          </Text>
+        <ScrollView style={styles.scroll}>
+          {
+            (['js', 'php', 'mysql', 'mongodb']).map(item => (
+              <TouchableOpacity activeOpacity={0.5} key={item}>
+                <View style={styles.item}>
+                  <Text style={styles.itemText}>
+                    {item}
+                  </Text>
+                  <Icon
+                    name="navigate-next"
+                    size={24}
+                    color="#fff"
+                    style={styles.itemIcon}
+                    backgroundColor="transparent"
+                  />
+                </View>
+              </TouchableOpacity>
+            ))
+          }
         </ScrollView>
         <View style={styles.footer}>
-          <Icon.Button
-            onPress={() => console.log('onPress')}
-            name="wb-sunny"
-            size={24}
-            color="#fff"
-            style={{ paddingLeft: 5 }}
-            backgroundColor="transparent"
-          >
-            白天
-          </Icon.Button>
-          <Icon.Button
-            onPress={() => console.log('onPress')}
-            name="brightness-2"
-            size={24}
-            color="#fff"
-            style={{ paddingLeft: 5 }}
-            backgroundColor="transparent"
-          >
-            夜间
-          </Icon.Button>
+          <View style={styles.footerItem} />
+          <View style={styles.footerItem}>
+            <SwitchTheme />
+          </View>
         </View>
       </View>
     );

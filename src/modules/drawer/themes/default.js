@@ -27,18 +27,33 @@ export const styleJson = {
   },
   avatarText: {
     color: '#FFFFFF',
-    fontSize: 15,
+    fontSize: 16,
+  },
+  scroll: {
+    marginTop: 30,
   },
   item: {
-    height: 30,
+    height: 35,
     paddingRight: 10,
     paddingLeft: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  ItemText: {
+  itemText: {
     color: '#FFFFFF',
-    fontSize: 24,
+    fontSize: 18,
+    flex: 1,
+  },
+  itemIcon: {
+    paddingRight: 5,
+    width: 30,
   },
   footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  footerItem: {
+    flex: 1,
   },
 };
 
