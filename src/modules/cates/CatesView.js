@@ -8,13 +8,18 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import CateList from './CateList';
 
 export default class CateView extends Component {
   static propTypes = {
     navigate: PropTypes.func.isRequired,
-    // resultsRequest: PropTypes.func.isRequired,
-    // loading: PropTypes.bool.isRequired,
-    // loaded: PropTypes.bool.isRequired,
+    resultsRequest: PropTypes.func.isRequired,
+    resultsReload: PropTypes.func.isRequired,
+    resultsNextPage: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
+    loaded: PropTypes.bool.isRequired,
+    hasNextPage: PropTypes.bool.isRequired,
+    articles: PropTypes.object.isRequired,
   };
 
   static navigationOptions = {
@@ -40,10 +45,40 @@ export default class CateView extends Component {
     }),
   }
 
+  componentWillMount() {
+    const { resultsRequest, loaded, loading } = this.props;
+    // if (!loaded && !loading) {
+    resultsRequest('57d22b6dc9a8ff581714aa29');
+    // }
+  }
+
+  refreshHandle = () => {
+    const { resultsReload } = this.props;
+    resultsReload('57d22b6dc9a8ff581714aa29');
+  }
+
+  loadMoreHandle = () => {
+    const { resultsNextPage, loading, hasNextPage } = this.props;
+    if (!loading && hasNextPage) {
+      resultsNextPage('57d22b6dc9a8ff581714aa29');
+    }
+  }
+
   render() {
+    const { articles,
+      loading,
+      loaded,
+      } = this.props;
+
     return (
       <View>
-        <Text> Cate </Text>
+        <CateList
+          articles={articles}
+          loading={loading}
+          loaded={loaded}
+          refresh={this.refreshHandle}
+          loadMore={this.loadMoreHandle}
+        />
       </View>
     );
   }

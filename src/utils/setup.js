@@ -1,16 +1,8 @@
-import Relay from 'react-relay';
 import { serverURL } from '../../env';
 
 import * as snapshot from './snapshot';
 
-// snapshot.clearSnapshot();
-
-Relay.injectNetworkLayer(
-  new Relay.DefaultNetworkLayer(`${serverURL}/graphql`, {
-    fetchTimeout: 30000,
-    retryDelays: [5000, 10000],
-  }),
-);
+snapshot.clearSnapshot();
 
 global.LOG = (...args) => {
   console.log('/------------------------------\\');
