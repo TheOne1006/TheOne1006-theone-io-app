@@ -8,6 +8,7 @@ import ColorViewContainer from '../colors/ColorViewContainer';
 import HomeContainer from '../home/HomeContainer';
 import DrawerView from '../drawer/DrawerView';
 import CatesContainer from '../cates/CatesContainer';
+import ArticleContainer from '../article/ArticleContainer';
 
 const headerColor = '#39babd';
 const activeColor = 'white';
@@ -16,9 +17,8 @@ const activeColor = 'white';
 // TabNavigator is nested inside StackNavigator
 export const MainScreenNavigator = TabNavigator({
   Main: { screen: HomeContainer },
-  Counter: { screen: CounterViewContainer },
-  Color: { screen: ColorViewContainer },
   Demo: { screen: CatesContainer },
+  Article: { screen: ArticleContainer },
 }, {
   tabBarOptions: {
     activeTintColor: '#e91e63',

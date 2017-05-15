@@ -5,6 +5,7 @@ import NavigatorStateReducer from '../modules/navigator/NavigatorState';
 import CounterStateReducer from '../modules/counter/CounterState';
 import HomeStateReducer from '../modules/home/HomeState';
 import CatesStateReducer from '../modules/cates/CatesState';
+import ArticleStateReducer from '../modules/article/ArticleState';
 import SessionStateReducer, { RESET_STATE } from '../modules/session/SessionState';
 
 const reducers = {
@@ -12,6 +13,7 @@ const reducers = {
   counter: CounterStateReducer,
   home: HomeStateReducer,
   cate: CatesStateReducer,
+  article: ArticleStateReducer,
   setting: SettingReducer,
 
   // Navigator states

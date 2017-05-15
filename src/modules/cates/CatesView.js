@@ -26,7 +26,7 @@ export default class CateView extends Component {
     title: 'Cate',
     header: navigation => ({
       left: (<Icon.Button
-        onPress={() => navigation.navigate('DrawerOpen')}
+        onPress={() => navigation.navigate('Main')}
         name="navigate-before"
         size={24}
         color="#fff"
@@ -68,6 +68,7 @@ export default class CateView extends Component {
     const { articles,
       loading,
       loaded,
+      hasNextPage,
       } = this.props;
 
     return (
@@ -78,6 +79,7 @@ export default class CateView extends Component {
           loaded={loaded}
           refresh={this.refreshHandle}
           loadMore={this.loadMoreHandle}
+          hasNextPage={hasNextPage}
         />
       </View>
     );
