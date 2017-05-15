@@ -81,6 +81,7 @@ export function resultsResponse() {
         resultArr.push({
           title: 'Top',
           articles: recommendArticles,
+          _id: null,
         });
       }
 
@@ -93,6 +94,7 @@ export function resultsResponse() {
         const catesSectionsArr = allCates.map(item => ({
           title: item.name,
           articles: (item.articlesConnection && item.articlesConnection.articles) || [],
+          _id: item._id,
         }));
         resultArr = resultArr.concat(catesSectionsArr);
       }

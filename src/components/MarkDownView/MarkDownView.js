@@ -1,67 +1,86 @@
 /**
  * @flow
  */
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
-  Image,
   WebView,
 } from 'react-native';
 
+import marked from 'marked';
+import highLight from 'highlight.js';
+
 import lightStyles from './themes/light';
 import darkStyles from './themes/dark';
+import HtmlRender from './HtmlRender';
 
 type MarkDownViewProps = {
   theme?: ?string,
   content: string,
 }
 
-const HTML = `
-<!DOCTYPE html>\n
-<html>
-  <head>
-    <title>Hello Static World</title>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=320, user-scalable=no">
-    <style type="text/css">
-      body {
-        margin: 0;
-        padding: 0;
-        font: 62.5% arial, sans-serif;
-        background: #ccc;
-      }
-      h1 {
-        padding: 45px;
-        margin: 0;
-        text-align: center;
-        color: #33f;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Hello Static World</h1>
-  </body>
-</html>
-`;
+const renderer = new marked.Renderer();
+renderer.link = (href, title, text) => (`<a target="_blank" href="${href}" title="${title}"> ${text} </a>`);
 
-const MarkDownView = ({ theme, content }: MarkDownViewProps) => {
-  const styles = theme === 'dark' ? darkStyles : lightStyles;
-  return (
-    <View>
-      <WebView
-        style={{
-          height: 100,
-        }}
-        source={{ html: HTML }}
-        scalesPageToFit
-      />
-    </View>
-  );
-};
+class MarkDownView extends Component {
+  static defaultProps = {
+    theme: 'light',
+    content: '# h1',
+  };
 
-MarkDownView.defaultProps = {
-  theme: 'light',
-};
+  state = {
+    warrperHeihgt: 300,
+  }
+
+  props: MarkDownViewProps
+
+  handleChangeHeight = (height: Number) => {
+    if (height) {
+      this.setState({
+        warrperHeihgt: height
+      })
+    }
+  }
+
+  componentWillMount() {
+    marked.setOptions({
+      gfm: true,
+      tables: true,
+      breaks: false,
+      pedantic: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: false,
+      highlight: (code: string, lang: string) => (highLight.highlight(lang || 'js', code).value),
+    });
+  }
+
+  render() {
+    const { theme, content } = this.props;
+    const { warrperHeihgt } = this.state;
+    const htmlText = marked(content, { renderer });
+
+    // console.log(htmlText);
+    return (
+      <View>
+        <WebView
+          style={{ flex: 1, minHeight: 300, height: warrperHeihgt }}
+          bounces={false}
+          scrollEnabled={false}
+          javaScriptEnabled
+          source={{ html: HtmlRender(htmlText) }}
+          scalesPageToFit
+          onNavigationStateChange={(info) => {
+            const WebViewHeight = info.url.replace('about:blank%23', '') / 1 ;
+            if (WebViewHeight) {
+              this.handleChangeHeight(WebViewHeight - 0);
+            }
+          }}
+        />
+      </View>
+    );
+  }
+}
 
 export default MarkDownView;

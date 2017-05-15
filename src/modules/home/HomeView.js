@@ -21,7 +21,7 @@ export default class HomeView extends Component {
   };
 
   static navigationOptions = {
-    title: 'Home',
+    title: 'TheOne.io',
     header: navigation => ({
       left: (<Icon.Button
         onPress={() => navigation.navigate('DrawerOpen')}
@@ -50,11 +50,12 @@ export default class HomeView extends Component {
     // }
   }
   render() {
-    const { sections, loading, loaded } = this.props;
+    const { sections, loading, loaded, navigate } = this.props;
     if (!loading && loaded) {
       return (
         <SectionList
           sections={sections}
+          navigate={navigate}
         />
       );
     }

@@ -12,6 +12,7 @@ import CateList from './CateList';
 
 export default class CateView extends Component {
   static propTypes = {
+    navigation: PropTypes.object.isRequired,
     navigate: PropTypes.func.isRequired,
     resultsRequest: PropTypes.func.isRequired,
     resultsReload: PropTypes.func.isRequired,
@@ -23,10 +24,10 @@ export default class CateView extends Component {
   };
 
   static navigationOptions = {
-    title: 'Cate',
+    title: ({ state }) => (state.params.title || 'Cate'),
     header: navigation => ({
       left: (<Icon.Button
-        onPress={() => navigation.navigate('Main')}
+        onPress={() => navigation.goBack()}
         name="navigate-before"
         size={24}
         color="#fff"
@@ -46,21 +47,26 @@ export default class CateView extends Component {
   }
 
   componentWillMount() {
-    const { resultsRequest, loaded, loading } = this.props;
-    // if (!loaded && !loading) {
-    resultsRequest('57d22b6dc9a8ff581714aa29');
-    // }
+    const { resultsRequest, loaded, loading, navigation: { state } } = this.props;
+    const cateID = state && state.params && state.params.cateID;
+    if (cateID) {
+      resultsRequest(cateID);
+    }
   }
 
   refreshHandle = () => {
-    const { resultsReload } = this.props;
-    resultsReload('57d22b6dc9a8ff581714aa29');
+    const { resultsReload, navigation: { state } } = this.props;
+    const cateID = state && state.params && state.params.cateID;
+    if (cateID) {
+      resultsReload(cateID);
+    }
   }
 
   loadMoreHandle = () => {
-    const { resultsNextPage, loading, hasNextPage } = this.props;
-    if (!loading && hasNextPage) {
-      resultsNextPage('57d22b6dc9a8ff581714aa29');
+    const { resultsNextPage, loading, hasNextPage, navigation: { state } } = this.props;
+    const cateID = state && state.params && state.params.cateID;
+    if (!loading && hasNextPage && cateID) {
+      resultsNextPage(cateID);
     }
   }
 
@@ -69,6 +75,7 @@ export default class CateView extends Component {
       loading,
       loaded,
       hasNextPage,
+      navigate,
       } = this.props;
 
     return (
@@ -80,6 +87,7 @@ export default class CateView extends Component {
           refresh={this.refreshHandle}
           loadMore={this.loadMoreHandle}
           hasNextPage={hasNextPage}
+          navigate={navigate}
         />
       </View>
     );

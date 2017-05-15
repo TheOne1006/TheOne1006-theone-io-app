@@ -52,6 +52,7 @@ class CateList extends Component {
     loading: boolean,
     refresh: Function,
     loadMore: Function,
+    navigate: Function,
     hasNextPage: boolean,
   }
 
@@ -86,6 +87,9 @@ class CateList extends Component {
       title={rowData.title}
       descript={rowData.descript}
       thumbnail={rowData.thumbnail}
+      articleID={rowData._id}
+      title={rowData.title}
+      navigate={this.props.navigate}
     />
   );
 

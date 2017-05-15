@@ -33,9 +33,9 @@ export const styleJson = {
     marginTop: 30,
   },
   item: {
-    height: 35,
-    paddingRight: 10,
-    paddingLeft: 10,
+    height: 50,
+    paddingRight: 15,
+    paddingLeft: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

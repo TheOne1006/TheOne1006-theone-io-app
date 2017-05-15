@@ -57,13 +57,16 @@ class SectionList extends Component {
 
   props: {
     sections: Object,
+    navigate: Function,
   }
 
   renderRow = (rowData: Object): React.Element<any> => (
     <ArticleListItem
+      articleID={rowData._id}
       title={rowData.title}
       descript={rowData.descript}
       thumbnail={rowData.thumbnail}
+      navigate={this.props.navigate}
     />
   );
 

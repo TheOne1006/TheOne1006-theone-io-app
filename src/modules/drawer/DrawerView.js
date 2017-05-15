@@ -1,7 +1,7 @@
 /**
  * @flow
  */
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   View,
   Text,
@@ -17,7 +17,13 @@ import styles from './themes/light';
 const defaultAvatar = require('./imgs/defaultAvatar.png');
 
 class DrawerView extends Component {
+  static propTypes = {
+    navigate: PropTypes.func.isRequired,
+    cates: PropTypes.object.isRequired,
+  };
+
   render() {
+    const { cates, navigate } = this.props;
     return (
       <View style={styles.root}>
         <View style={styles.avatar}>
@@ -33,11 +39,15 @@ class DrawerView extends Component {
         </View>
         <ScrollView style={styles.scroll}>
           {
-            (['js', 'php', 'mysql', 'mongodb']).map(item => (
-              <TouchableOpacity activeOpacity={0.5} key={item}>
+            (cates).map(item => (
+              <TouchableOpacity
+                activeOpacity={0.5}
+                key={item.title}
+                onPress={() => (navigate({ routeName: 'Cate', params: { cateID: item._id, title: item.title } }))}
+              >
                 <View style={styles.item}>
                   <Text style={styles.itemText}>
-                    {item}
+                    {item.title}
                   </Text>
                   <Icon
                     name="navigate-next"

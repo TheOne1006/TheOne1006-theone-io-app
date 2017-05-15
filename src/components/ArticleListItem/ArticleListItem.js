@@ -6,6 +6,7 @@ import {
   View,
   Text,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import lightStyles from './themes/light';
 import darkStyles from './themes/dark';
@@ -13,14 +14,19 @@ import darkStyles from './themes/dark';
 type ArticleListItemProps = {
   theme?: ?string,
   title: string,
+  articleID: string,
   descript: string,
   thumbnail: string,
+  navigate: Function,
 }
 
-const ArticleListItem = ({ theme, title, descript, thumbnail }: ArticleListItemProps) => {
+const ArticleListItem = ({ theme, title, descript, thumbnail, articleID, navigate }: ArticleListItemProps) => {
   const styles = theme === 'dark' ? darkStyles : lightStyles;
   return (
-    <View style={styles.row}>
+    <TouchableOpacity
+      style={styles.row}
+      onPress={() => (navigate({ routeName: 'Article', params: { articleID, title } }))}
+    >
       <View style={styles.content}>
         <Text style={styles.rowTitle}>
           {title}
@@ -35,7 +41,7 @@ const ArticleListItem = ({ theme, title, descript, thumbnail }: ArticleListItemP
           uri: `https:${thumbnail}`,
         }}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 
