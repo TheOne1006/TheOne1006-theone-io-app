@@ -91,6 +91,7 @@ const initialState = fromJS({
   article: fromJS({}),
   loading: false,
   loaded: false,
+  currentArticleID: '',
 });
 
 // Reducer
@@ -113,6 +114,7 @@ export default function ArticleStateReducer(state: Object = initialState, action
         loading: false,
         loaded: true,
         article: fromJS(action.payload.article),
+        currentArticleID: action.payload.article._id,
       });
 
     case RESULTS_FAIL:

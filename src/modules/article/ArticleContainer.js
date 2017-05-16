@@ -8,6 +8,7 @@ export default connect(
     article: globalState.getIn(['article', 'article']),
     loading: globalState.getIn(['article', 'loading']),
     loaded: globalState.getIn(['article', 'loaded']),
+    currentArticleID: globalState.getIn(['article', 'currentArticleID']),
   }),
   dispatch => ({
     resultsRequest: bindActionCreators(resultsRequest, dispatch),

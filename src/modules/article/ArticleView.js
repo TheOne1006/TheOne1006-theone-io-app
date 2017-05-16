@@ -18,15 +18,9 @@ export default class ArticleView extends Component {
     navigation: PropTypes.object.isRequired,
     resultsRequest: PropTypes.func.isRequired,
     article: PropTypes.object.isRequired,
+    currentArticleID: PropTypes.string,
+    loaded: PropTypes.bool.isRequired,
   };
-
-  static defaultProps = {
-    article: {
-      _id: '589bde63440e31001b499de3',
-      title: 'javaScript 表达式立即调用',
-      thumbnail: '//api.theone.io/api/v2/thumbnails/thumbnails/download/js-quanwei.jpg',
-    },
-  }
 
   static navigationOptions = {
     title: ({ state }) => (state.params.title || 'Article'),
@@ -52,27 +46,34 @@ export default class ArticleView extends Component {
   }
 
   componentWillMount() {
-    const { resultsRequest, navigation } = this.props;
-    console.log(navigation);
-    // if (!loaded && !loading) {
-    resultsRequest('589bde63440e31001b499de3');
-    // }
+    const { resultsRequest, currentArticleID, loaded, navigation: { state } } = this.props;
+    const articleID = state.params.articleID;
+    if (currentArticleID !== articleID || !loaded) {
+      resultsRequest(articleID);
+    }
   }
 
   render() {
-    const { article } = this.props;
+    const { article, currentArticleID, navigation: { state } } = this.props;
+    const articleID = state.params.articleID;
 
     return (
       <ScrollView>
-        <View>
-          <Image
-            source={{ uri: `https:${article.get('thumbnail')}` }}
-            style={styles.thumbnail}
-          />
-        </View>
-        <View>
-          <MarkDownView content={article.get('content')} />
-        </View>
+        {
+          (currentArticleID === articleID) ? (
+            <View>
+              <View>
+                <Image
+                  source={{ uri: `https:${article.get('thumbnail')}` }}
+                  style={styles.thumbnail}
+                />
+              </View>
+              <View>
+                <MarkDownView content={article.get('content')} />
+              </View>
+            </View>
+          ) : null
+        }
       </ScrollView>
     );
   }

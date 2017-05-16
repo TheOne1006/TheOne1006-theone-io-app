@@ -535,6 +535,10 @@ const htmlRender = (html: string) => (
       var height = document.body.clientHeight;
       window.location.hash = '#' + height;
     }
+
+    // window.postRn = function (href) {
+    //   window.postMessage(href)
+    // }
   </script>
   `
 );

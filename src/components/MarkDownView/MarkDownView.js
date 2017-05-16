@@ -21,7 +21,11 @@ type MarkDownViewProps = {
 }
 
 const renderer = new marked.Renderer();
-renderer.link = (href, title, text) => (`<a target="_blank" href="${href}" title="${title}"> ${text} </a>`);
+renderer.link = (href, title, text) => {
+  return (`
+    <a id="${href}" title="${title}"> ${text} </a>
+  `);
+};
 
 class MarkDownView extends Component {
   static defaultProps = {
@@ -71,11 +75,15 @@ class MarkDownView extends Component {
           javaScriptEnabled
           source={{ html: HtmlRender(htmlText) }}
           scalesPageToFit
+          canGoBack
           onNavigationStateChange={(info) => {
             const WebViewHeight = info.url.replace('about:blank%23', '') / 1 ;
             if (WebViewHeight) {
               this.handleChangeHeight(WebViewHeight - 0);
             }
+          }}
+          onMessage = {(e) => {
+            console.log(e.nativeEvent.data);
           }}
         />
       </View>
