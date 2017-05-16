@@ -3,49 +3,44 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "theone.io.logo.png",
+      "filename" : "apple-touch-icon.png",
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "theone.io.logo-1.png",
+      "filename" : "my.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "theone.io.logo-3.png",
+      "filename" : "my-1.png",
       "scale" : "2x"
     },
     {
+      "idiom" : "iphone",
       "size" : "29x29",
-      "idiom" : "iphone",
-      "filename" : "theone.io.logo-2.png",
       "scale" : "3x"
     },
     {
-      "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "theone.io.logo-6.png",
+      "size" : "40x40",
       "scale" : "2x"
     },
     {
-      "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "theone.io.logo-7.png",
+      "size" : "40x40",
       "scale" : "3x"
     },
     {
-      "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "theone.io.logo-5.png",
+      "size" : "60x60",
       "scale" : "2x"
     },
     {
-      "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "theone.io.logo-4.png",
+      "size" : "60x60",
       "scale" : "3x"
     }
   ],
