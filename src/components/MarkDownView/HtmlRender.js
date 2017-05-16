@@ -6,9 +6,9 @@ const htmlRender = (html: string) => (
   <!DOCTYPE html>\n
   <html>
     <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
       <style>
-
       /*
 
       Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
@@ -443,7 +443,6 @@ const htmlRender = (html: string) => (
 .markdown-body code::before,
 .markdown-body code::after {
   letter-spacing: -0.2em;
-  content: '\00a0';
 }
 
 .markdown-body pre > code {

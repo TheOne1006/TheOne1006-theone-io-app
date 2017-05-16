@@ -20,8 +20,8 @@ export const styleJson = {
     justifyContent: 'center',
     height: 20,
     flexDirection: 'row',
-    paddingLeft: 30,
-    paddingRight: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   line: {
     flex: 1,
@@ -33,6 +33,8 @@ export const styleJson = {
     color: '#CCCCCC',
     fontSize: 15,
     textAlign: 'center',
+    paddingLeft: 15,
+    paddingRight: 15,
   },
 };
 

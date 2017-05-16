@@ -74,7 +74,7 @@ class CateList extends Component {
         <View style={styles.baseLine}>
           <View style={styles.line} />
           <Text style={styles.baseLineText}>
-            我也是有底线了
+            我也是有底线的
           </Text>
           <View style={styles.line} />
         </View>

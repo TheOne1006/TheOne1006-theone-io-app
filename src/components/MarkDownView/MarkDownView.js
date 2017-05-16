@@ -71,7 +71,7 @@ class MarkDownView extends Component {
           scrollEnabled={false}
           javaScriptEnabled
           source={{ html: HtmlRender(htmlText) }}
-          scalesPageToFit
+          scalesPageToFit={false}
           canGoBack
           onNavigationStateChange={(info) => {
             const WebViewHeight = info.url.replace('about:blank%23', '') / 1;
