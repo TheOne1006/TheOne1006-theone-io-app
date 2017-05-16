@@ -534,6 +534,17 @@ const htmlRender = (html: string) => (
     window.onload = function(){
       var height = document.body.clientHeight;
       window.location.hash = '#' + height;
+
+      var links = document.getElementsByClassName('link');
+
+         for(var i=0;i<links.length;i++){
+          (function (link) {
+            var href = link.getAttribute('data-href');
+             link.onclick = function () {
+               window.postMessage(href)
+             }
+          })(links[i]);
+         }
     }
 
     // window.postRn = function (href) {

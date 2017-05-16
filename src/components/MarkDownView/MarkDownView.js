@@ -10,6 +10,7 @@ import {
 
 import marked from 'marked';
 import highLight from 'highlight.js';
+import SafariView from 'react-native-safari-view';
 
 import lightStyles from './themes/light';
 import darkStyles from './themes/dark';
@@ -23,7 +24,7 @@ type MarkDownViewProps = {
 const renderer = new marked.Renderer();
 renderer.link = (href, title, text) => {
   return (`
-    <a id="${href}" title="${title}"> ${text} </a>
+    <a class="link" title="${title}" href="javascript:;" data-href="${href}"> ${text} </a>
   `);
 };
 
@@ -42,8 +43,8 @@ class MarkDownView extends Component {
   handleChangeHeight = (height: Number) => {
     if (height) {
       this.setState({
-        warrperHeihgt: height
-      })
+        warrperHeihgt: height,
+      });
     }
   }
 
@@ -82,8 +83,14 @@ class MarkDownView extends Component {
               this.handleChangeHeight(WebViewHeight - 0);
             }
           }}
-          onMessage = {(e) => {
-            console.log(e.nativeEvent.data);
+          onMessage={(e) => {
+            const url = e.nativeEvent.data;
+            if (url) {
+              console.log(SafariView);
+              // SafariView.show({
+              //   url: 'https://github.com/naoufal',
+              // });
+            }
           }}
         />
       </View>
