@@ -1,3 +1,6 @@
+/**
+ * @flow
+ */
 import Promise from 'bluebird';
 import { fromJS } from 'immutable';
 import { loop, Effects } from 'redux-loop-symbol-ponyfill';
@@ -119,7 +122,7 @@ const initialState = fromJS({
 });
 
 // Reducer
-export default function HomeStateReducer(state = initialState, action = {}) {
+export default function HomeStateReducer(state: Object = initialState, action: Object = {}) {
   switch (action.type) {
     case RESULTS_REQUEST:
       return loop(

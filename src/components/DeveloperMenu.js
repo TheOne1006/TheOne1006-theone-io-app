@@ -1,6 +1,9 @@
+/**
+ * @flow
+ */
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 
 // For tests
-const DeveloperMenu = () => <View/>;
+const DeveloperMenu = () => <View />;
 export default DeveloperMenu;

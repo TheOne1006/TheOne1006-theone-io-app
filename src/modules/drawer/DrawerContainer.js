@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import { bindActionCreators } from 'redux';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';

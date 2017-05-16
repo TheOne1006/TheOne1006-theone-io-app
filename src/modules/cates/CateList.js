@@ -1,7 +1,6 @@
 /**
  * @flow
  */
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 import React, { Component } from 'react';
 import {
@@ -20,6 +19,16 @@ const dataSource = new ListView.DataSource({
   rowHasChanged,
 });
 
+type CateListPropsType = {
+  articles: Object,
+  loaded: boolean,
+  loading: boolean,
+  refresh: Function,
+  loadMore: Function,
+  navigate: Function,
+  hasNextPage: boolean,
+}
+
 class CateList extends Component {
   state = {
     dataSource: {},
@@ -33,7 +42,7 @@ class CateList extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: CateListPropsType) {
     const { loading } = this.props;
     const nextLoaded = nextProps.loaded;
     const nextLoading = nextProps.loading;
@@ -46,15 +55,7 @@ class CateList extends Component {
     }
   }
 
-  props: {
-    articles: Object,
-    loaded: boolean,
-    loading: boolean,
-    refresh: Function,
-    loadMore: Function,
-    navigate: Function,
-    hasNextPage: boolean,
-  }
+  props: CateListPropsType
 
   renderSeparator = (sectionID: string, rowID: string) => (
     <View key={`${sectionID}-${rowID}-separator`} style={styles.separator} />
@@ -88,7 +89,6 @@ class CateList extends Component {
       descript={rowData.descript}
       thumbnail={rowData.thumbnail}
       articleID={rowData._id}
-      title={rowData.title}
       navigate={this.props.navigate}
     />
   );

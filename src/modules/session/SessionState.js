@@ -1,3 +1,6 @@
+/**
+ * @flow
+ */
 import { Map } from 'immutable';
 
 export const RESET_STATE = 'SessionState/RESET';
@@ -5,7 +8,7 @@ export const INITIALIZE_STATE = 'SessionState/INITIALIZE';
 // Initial state
 const initialState = Map({ isReady: false });
 
-export function resetSessionStateFromSnapshot(state) {
+export function resetSessionStateFromSnapshot(state: Object) {
   return {
     type: RESET_STATE,
     payload: state,
@@ -19,7 +22,7 @@ export function initializeSessionState() {
 }
 
 // Reducer
-export default function SessionStateReducer(state = initialState, action = {}) {
+export default function SessionStateReducer(state: Object = initialState, action: Object = {}) {
   switch (action.type) {
     case INITIALIZE_STATE:
     case RESET_STATE:

@@ -1,12 +1,47 @@
-import React, {Component} from 'react';
-import * as snapshot from '../utils/snapshot';
+/**
+ * @flow
+ */
 
+import React, { Component } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
+import * as snapshot from '../utils/snapshot';
+
+
+const styles = StyleSheet.create({
+  circle: {
+    position: 'absolute',
+    bottom: 5,
+    right: 5,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#fff',
+  },
+  menu: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  menuItem: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
+    padding: 10,
+    height: 60,
+  },
+  menuItemText: {
+    fontSize: 20,
+  },
+});
 
 /**
  * Simple developer menu, which allows e.g. to clear the app state.
@@ -16,13 +51,12 @@ import {
 class DeveloperMenu extends Component {
   static displayName = 'DeveloperMenu';
 
-  constructor(props) {
-    super(props);
-    this.state = {visible: false};
+  state = {
+    isVisible: false,
   }
 
   showDeveloperMenu = () => {
-    this.setState({isVisible: true});
+    this.setState({ isVisible: true });
   };
 
   clearState = async () => {
@@ -32,20 +66,18 @@ class DeveloperMenu extends Component {
   };
 
   closeMenu = () => {
-    this.setState({isVisible: false});
+    this.setState({ isVisible: false });
   };
 
-  renderMenuItem(text, onPress) {
-    return (
-      <TouchableOpacity
-        key={text}
-        onPress={onPress}
-        style={styles.menuItem}
-        >
-        <Text style={styles.menuItemText}>{text}</Text>
-      </TouchableOpacity>
-    );
-  }
+  renderMenuItem = (text: string, onPress: Function) => (
+    <TouchableOpacity
+      key={text}
+      onPress={onPress}
+      style={styles.menuItem}
+    >
+      <Text style={styles.menuItemText}>{text}</Text>
+    </TouchableOpacity>
+  );
 
   render() {
     if (!__DEV__) {
@@ -57,13 +89,13 @@ class DeveloperMenu extends Component {
         <TouchableOpacity
           style={styles.circle}
           onPress={this.showDeveloperMenu}
-          />
+        />
       );
     }
 
     const buttons = [
       this.renderMenuItem('Clear state', this.clearState),
-      this.renderMenuItem('Cancel', this.closeMenu)
+      this.renderMenuItem('Cancel', this.closeMenu),
     ];
 
     return (
@@ -73,36 +105,5 @@ class DeveloperMenu extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  circle: {
-    position: 'absolute',
-    bottom: 5,
-    right: 5,
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: '#fff'
-  },
-  menu: {
-    backgroundColor: 'white',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0
-  },
-  menuItem: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderTopWidth: 1,
-    borderTopColor: '#eee',
-    padding: 10,
-    height: 60
-  },
-  menuItemText: {
-    fontSize: 20
-  }
-});
 
 export default DeveloperMenu;

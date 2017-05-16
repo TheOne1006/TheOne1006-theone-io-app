@@ -4,7 +4,6 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   WebView,
 } from 'react-native';
 
@@ -16,36 +15,19 @@ import lightStyles from './themes/light';
 import darkStyles from './themes/dark';
 import HtmlRender from './HtmlRender';
 
-type MarkDownViewProps = {
-  theme?: ?string,
-  content: string,
-}
-
 const renderer = new marked.Renderer();
-renderer.link = (href, title, text) => {
-  return (`
+renderer.link = (href, title, text) => (`
     <a class="link" title="${title}" href="javascript:;" data-href="${href}"> ${text} </a>
   `);
-};
 
 class MarkDownView extends Component {
   static defaultProps = {
     theme: 'light',
-    content: '# h1',
+    content: '',
   };
 
   state = {
     warrperHeihgt: 300,
-  }
-
-  props: MarkDownViewProps
-
-  handleChangeHeight = (height: Number) => {
-    if (height) {
-      this.setState({
-        warrperHeihgt: height,
-      });
-    }
   }
 
   componentWillMount() {
@@ -61,16 +43,30 @@ class MarkDownView extends Component {
     });
   }
 
+  props: {
+    theme?: ?string,
+    content: string,
+  }
+
+  handleChangeHeight = (height: number) => {
+    if (height) {
+      this.setState({
+        warrperHeihgt: height,
+      });
+    }
+  }
+
   render() {
     const { theme, content } = this.props;
     const { warrperHeihgt } = this.state;
     const htmlText = marked(content, { renderer });
+    const styles = (theme === 'dark') ? darkStyles : lightStyles;
 
     // console.log(htmlText);
     return (
       <View>
         <WebView
-          style={{ flex: 1, minHeight: 300, height: warrperHeihgt }}
+          style={[styles.webViewContainer, { height: warrperHeihgt }]}
           bounces={false}
           scrollEnabled={false}
           javaScriptEnabled
@@ -78,7 +74,7 @@ class MarkDownView extends Component {
           scalesPageToFit
           canGoBack
           onNavigationStateChange={(info) => {
-            const WebViewHeight = info.url.replace('about:blank%23', '') / 1 ;
+            const WebViewHeight = info.url.replace('about:blank%23', '') / 1;
             if (WebViewHeight) {
               this.handleChangeHeight(WebViewHeight - 0);
             }
@@ -86,10 +82,14 @@ class MarkDownView extends Component {
           onMessage={(e) => {
             const url = e.nativeEvent.data;
             if (url) {
-              console.log(SafariView);
-              // SafariView.show({
-              //   url: 'https://github.com/naoufal',
-              // });
+              SafariView.isAvailable()
+                .then(SafariView.show({
+                  url,
+                }))
+                .catch((error) => {
+                  // Fallback WebView code for iOS 8 and earlier
+                  console.log(error);
+                });
             }
           }}
         />

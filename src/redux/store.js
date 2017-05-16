@@ -1,3 +1,6 @@
+/**
+ * @flow
+ */
 import { applyMiddleware, createStore, compose } from 'redux';
 import * as reduxLoop from 'redux-loop-symbol-ponyfill';
 

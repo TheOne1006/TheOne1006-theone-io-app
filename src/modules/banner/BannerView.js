@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import React, { Component } from 'react';
 import { List } from 'immutable';
 import Swiper from 'react-native-swiper';
@@ -22,7 +26,7 @@ class Banner extends Component {
     });
   }
 
-  loadHandle = (i) => {
+  loadHandle = (i: number) => {
     const { loadQueue } = this.state;
     const newLoadQueue = loadQueue.set(i, 1);
 

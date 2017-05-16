@@ -1,7 +1,8 @@
 /**
  * @flow
  */
-import React, { PropTypes, Component } from 'react';
+
+import React, { Component } from 'react';
 import {
   View,
   Image,
@@ -14,14 +15,6 @@ import styles from './themes/light';
 import MarkDownView from '../../components/MarkDownView/MarkDownView';
 
 export default class ArticleView extends Component {
-  static propTypes = {
-    navigation: PropTypes.object.isRequired,
-    resultsRequest: PropTypes.func.isRequired,
-    article: PropTypes.object.isRequired,
-    currentArticleID: PropTypes.string,
-    loaded: PropTypes.bool.isRequired,
-  };
-
   static navigationOptions = {
     title: ({ state }) => (state.params.title || 'Article'),
     header: navigation => ({
@@ -51,6 +44,14 @@ export default class ArticleView extends Component {
     if (currentArticleID !== articleID || !loaded) {
       resultsRequest(articleID);
     }
+  }
+
+  props: {
+    navigation: Object,
+    resultsRequest: Function,
+    article: Object,
+    currentArticleID: string,
+    loaded: boolean,
   }
 
   render() {

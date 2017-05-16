@@ -1,11 +1,17 @@
 /**
- * flow
+ * @flow
  */
-import React, { PropTypes } from 'react';
+
+import React from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-function SwitchThemeView({ switchNextTheme, theme }) {
+type SwitchThemeViewPropsType = {
+  switchNextTheme: Function,
+  theme: string,
+}
+
+function SwitchThemeView({ switchNextTheme, theme }: SwitchThemeViewPropsType) {
   const lightEle = (
     <Icon.Button
       onPress={() => switchNextTheme('night')}
@@ -38,10 +44,5 @@ function SwitchThemeView({ switchNextTheme, theme }) {
     </View>
   );
 }
-
-SwitchThemeView.propTypes = {
-  switchNextTheme: PropTypes.func.isRequired,
-  theme: PropTypes.string.isRequired,
-};
 
 export default SwitchThemeView;

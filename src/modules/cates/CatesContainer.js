@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NavigationActions } from 'react-navigation';
@@ -11,6 +15,7 @@ export default connect(
     loading: globalState.getIn(['cate', 'loading']),
     loaded: globalState.getIn(['cate', 'loaded']),
     hasNextPage: globalState.getIn(['cate', 'hasNextPage']),
+    currentCateID: globalState.getIn(['cate', 'currentCateID']),
   }),
   dispatch => ({
     navigate: bindActionCreators(NavigationActions.navigate, dispatch),

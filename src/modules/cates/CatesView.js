@@ -1,28 +1,14 @@
 /**
  * @flow
  */
-import React, { PropTypes, Component } from 'react';
-import {
-  Text,
-  View,
-} from 'react-native';
+
+import React, { Component } from 'react';
+import { View } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CateList from './CateList';
 
 export default class CateView extends Component {
-  static propTypes = {
-    navigation: PropTypes.object.isRequired,
-    navigate: PropTypes.func.isRequired,
-    resultsRequest: PropTypes.func.isRequired,
-    resultsReload: PropTypes.func.isRequired,
-    resultsNextPage: PropTypes.func.isRequired,
-    loading: PropTypes.bool.isRequired,
-    loaded: PropTypes.bool.isRequired,
-    hasNextPage: PropTypes.bool.isRequired,
-    articles: PropTypes.object.isRequired,
-  };
-
   static navigationOptions = {
     title: ({ state }) => (state.params.title || 'Cate'),
     header: navigation => ({
@@ -47,11 +33,25 @@ export default class CateView extends Component {
   }
 
   componentWillMount() {
-    const { resultsRequest, loaded, loading, navigation: { state } } = this.props;
+    const { resultsRequest, currentCateID, loaded, navigation: { state } } = this.props;
     const cateID = state && state.params && state.params.cateID;
-    if (cateID) {
+
+    if (currentCateID !== cateID || !loaded) {
       resultsRequest(cateID);
     }
+  }
+
+  props: {
+    navigation: Object,
+    navigate: Function,
+    resultsRequest: Function,
+    resultsReload: Function,
+    resultsNextPage: Function,
+    loading: boolean,
+    loaded: boolean,
+    hasNextPage: boolean,
+    articles: Object,
+    currentCateID: string,
   }
 
   refreshHandle = () => {

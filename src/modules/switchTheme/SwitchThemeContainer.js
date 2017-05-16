@@ -1,3 +1,6 @@
+/**
+ * @flow
+ */
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { switchTheme } from '../../redux/actions/setting';

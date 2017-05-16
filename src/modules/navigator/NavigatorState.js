@@ -1,10 +1,14 @@
+/**
+ * @flow
+ */
+
 import { fromJS } from 'immutable';
 import { NavigationActions } from 'react-navigation';
 import includes from 'lodash/includes';
 
 import AppNavigator from './Navigator';
 
-export default function NavigatorReducer(state, action) {
+export default function NavigatorReducer(state: Object, action: Object = {}) {
   // Initial state
   if (!state) {
     return fromJS(AppNavigator.router.getStateForAction(action, state));

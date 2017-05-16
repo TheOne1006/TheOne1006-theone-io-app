@@ -16,11 +16,18 @@ type ArticleListItemProps = {
   title: string,
   articleID: string,
   descript: string,
-  thumbnail: string,
+  thumbnail: ?string,
   navigate: Function,
 }
 
-const ArticleListItem = ({ theme, title, descript, thumbnail, articleID, navigate }: ArticleListItemProps) => {
+const ArticleListItem = ({
+  theme,
+  title,
+  descript,
+  thumbnail,
+  articleID,
+  navigate,
+  }: ArticleListItemProps) => {
   const styles = theme === 'dark' ? darkStyles : lightStyles;
   return (
     <TouchableOpacity
@@ -35,12 +42,17 @@ const ArticleListItem = ({ theme, title, descript, thumbnail, articleID, navigat
           {descript}
         </Text>
       </View>
-      <Image
-        style={styles.thumbnail}
-        source={{
-          uri: `https:${thumbnail}`,
-        }}
-      />
+      {
+        thumbnail ? (
+          <Image
+            style={styles.thumbnail}
+            source={{
+              uri: `https:${thumbnail}`,
+            }}
+          />
+        ) : null
+      }
+
     </TouchableOpacity>
   );
 };

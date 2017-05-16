@@ -1,3 +1,6 @@
+/**
+ * @flow
+ */
 import createLogger from 'redux-logger';
 
 // log actions in development mode

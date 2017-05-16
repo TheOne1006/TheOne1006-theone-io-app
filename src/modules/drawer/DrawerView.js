@@ -1,7 +1,8 @@
 /**
  * @flow
  */
-import React, { Component, PropTypes } from 'react';
+
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -17,10 +18,10 @@ import styles from './themes/light';
 const defaultAvatar = require('./imgs/defaultAvatar.png');
 
 class DrawerView extends Component {
-  static propTypes = {
-    navigate: PropTypes.func.isRequired,
-    cates: PropTypes.object.isRequired,
-  };
+  props: {
+    navigate: Function,
+    cates: Object,
+  }
 
   render() {
     const { cates, navigate } = this.props;

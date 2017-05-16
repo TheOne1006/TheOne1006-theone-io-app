@@ -1,4 +1,9 @@
-import React, { PropTypes, Component } from 'react';
+/**
+ * @flow
+ */
+/* eslint-disable react/no-unused-prop-types */
+
+import React, { Component } from 'react';
 import { addNavigationHelpers } from 'react-navigation';
 
 import AppNavigator from './Navigator';
@@ -6,24 +11,26 @@ import AppNavigator from './Navigator';
 class NavigatorView extends Component {
   static displayName = 'NavigationView';
 
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    navigatorState: PropTypes.shape({
-      index: PropTypes.number.isRequired,
-      routes: PropTypes.arrayOf(PropTypes.shape({
-        key: PropTypes.string.isRequired,
-        routeName: PropTypes.string.isRequired,
-      })),
-    }).isRequired,
-  };
+
+  props: {
+    dispatch: Function,
+    navigatorState: {
+      index: number,
+      routes: Array<{
+        key: string,
+        routeName: string
+      }>
+    }
+  }
 
   render() {
+    const { dispatch, navigatorState } = this.props;
     return (
       <AppNavigator
         navigation={
           addNavigationHelpers({
-            dispatch: this.props.dispatch,
-            state: this.props.navigatorState,
+            dispatch,
+            state: navigatorState,
           })
         }
       />

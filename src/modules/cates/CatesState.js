@@ -106,6 +106,7 @@ function resultsResponse(cateID: string, skip = 0) {
         payload: {
           cateName,
           hasNextPage,
+          cateID,
           articles: cateArticles,
         },
       };
@@ -119,6 +120,7 @@ function resultsResponse(cateID: string, skip = 0) {
 const initialState = fromJS({
   articles: fromJS([]),
   cateName: '',
+  currentCateID: '',
   loading: false,
   loaded: false,
   hasNextPage: false,
@@ -153,6 +155,7 @@ export default function CateStateReducer(state: Object = initialState, action: O
         articles: fromJS(action.payload.articles),
         cateName: action.payload.cateName,
         hasNextPage: action.payload.hasNextPage,
+        currentCateID: action.payload.cateID,
       });
 
     case RESULTS_RESPONSE_MERGE:

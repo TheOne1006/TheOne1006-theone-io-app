@@ -1,7 +1,6 @@
 /**
  * @flow
  */
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 import React, { Component } from 'react';
 import {
@@ -74,15 +73,13 @@ class SectionList extends Component {
     <View key={`${sectionID}-${rowID}-separator`} style={styles.separator} />
   );
 
-  renderSectionHeader = (sectionData: string, sectionID: string) => {
-    return (
-      <View style={styles.section}>
-        <Text style={styles.text}>
-          {sectionData}
-        </Text>
-      </View>
-    );
-  };
+  renderSectionHeader = (sectionData: string) => (
+    <View style={styles.section}>
+      <Text style={styles.text}>
+        {sectionData}
+      </Text>
+    </View>
+  );
 
   renderHeader = () => (<Banner />)
 
@@ -91,7 +88,6 @@ class SectionList extends Component {
       <ListView
         style={styles.listview}
         dataSource={this.state.dataSource}
-        onChangeVisibleRows={(visibleRows, changedRows) => console.log({visibleRows, changedRows })}
         renderHeader={this.renderHeader}
         enableEmptySections
         renderSectionHeader={this.renderSectionHeader}

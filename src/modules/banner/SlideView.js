@@ -1,6 +1,7 @@
 /**
  * @flow
  */
+
 import React from 'react';
 import {
   Image,
@@ -10,11 +11,11 @@ import {
 const loading = require('./imgs/loading.gif');
 
 type SideProps = {
-  i: Number,
+  i: number,
   loadHandle: Function,
   styles: Object,
-  uri: String,
-  loaded: Boolean
+  uri: string,
+  loaded: boolean
 }
 
 const Slide = ({ i, loadHandle, styles, uri, loaded }: SideProps) => (

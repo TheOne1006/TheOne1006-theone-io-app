@@ -2,7 +2,7 @@
  * @flow
  */
 
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import { View, StyleSheet, StatusBar, ActivityIndicator } from 'react-native';
 import NavigatorViewContainer from './navigator/NavigatorViewContainer';
 import * as snapshotUtil from '../utils/snapshot';
@@ -19,11 +19,6 @@ const styles = StyleSheet.create({
 
 class AppView extends Component {
   static displayName = 'AppView';
-
-  static propTypes = {
-    isReady: PropTypes.bool.isRequired,
-    dispatch: PropTypes.func.isRequired,
-  };
 
   componentDidMount() {
     // snapshotUtil.clearSnapshot();
@@ -43,10 +38,15 @@ class AppView extends Component {
       });
   }
 
+  props: {
+    isReady: boolean,
+    dispatch: Function
+  }
+
   render() {
     if (!this.props.isReady) {
       return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
           <ActivityIndicator style={styles.centered} />
         </View>
       );

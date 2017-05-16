@@ -4,8 +4,10 @@
 import { StyleSheet } from 'react-native';
 
 export const styleJson = {
-  text: {
-    color: '#111111',
+  webViewContainer: {
+    backgroundColor: '#FFFFFF',
+    flex: 1,
+    minHeight: 300,
   },
 };
 
