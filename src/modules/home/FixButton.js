@@ -22,6 +22,7 @@ const FixButton = ({ navigation }: FixButtonPropsType) => (
       color="#fff"
       style={{ paddingLeft: 5 }}
       backgroundColor="transparent"
+      underlayColor="transparent"
     />
   </View>
 );

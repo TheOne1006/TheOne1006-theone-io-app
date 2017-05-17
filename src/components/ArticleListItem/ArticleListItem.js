@@ -28,7 +28,7 @@ const ArticleListItem = ({
   articleID,
   navigate,
   }: ArticleListItemProps) => {
-  const styles = theme === 'dark' ? darkStyles : lightStyles;
+  const styles = theme === 'night' ? darkStyles : lightStyles;
   return (
     <TouchableOpacity
       style={styles.row}

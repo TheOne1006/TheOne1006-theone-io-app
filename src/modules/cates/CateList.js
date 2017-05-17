@@ -12,7 +12,8 @@ import {
 } from 'react-native';
 
 import ArticleListItem from '../../components/ArticleListItem/ArticleListItem';
-import styles from './themes/light';
+import lightStyles from './themes/light';
+import darkStyles from './themes/dark';
 
 type CateListPropsType = {
   articles: Object,
@@ -22,6 +23,7 @@ type CateListPropsType = {
   loadMore: Function,
   navigate: Function,
   hasNextPage: boolean,
+  theme: string,
 }
 
 class CateList extends Component {
@@ -58,12 +60,18 @@ class CateList extends Component {
 
   props: CateListPropsType
 
-  renderSeparator = (sectionID: string, rowID: string) => (
-    <View key={`${sectionID}-${rowID}-separator`} style={styles.separator} />
-  );
+  renderSeparator = (sectionID: string, rowID: string) => {
+    const { theme } = this.props;
+    const styles = (theme === 'night') ? darkStyles : lightStyles;
+    return (
+      <View key={`${sectionID}-${rowID}-separator`} style={styles.separator} />
+    );
+  }
 
   renderFooter = () => {
-    const { hasNextPage, loading, loaded } = this.props;
+    const { hasNextPage, loading, loaded, theme } = this.props;
+    const styles = (theme === 'night') ? darkStyles : lightStyles;
+
     let footerEle = (
       <View style={styles.baseLine}>
         <ActivityIndicator />
@@ -84,18 +92,23 @@ class CateList extends Component {
     return footerEle;
   }
 
-  renderRow = (rowData: Object): React.Element<any> => (
-    <ArticleListItem
-      title={rowData.title}
-      descript={rowData.descript}
-      thumbnail={rowData.thumbnail}
-      articleID={rowData._id}
-      navigate={this.props.navigate}
-    />
-  );
+  renderRow = (rowData: Object): React.Element<any> => {
+    const { theme } = this.props;
+    return (
+      <ArticleListItem
+        title={rowData.title}
+        descript={rowData.descript}
+        thumbnail={rowData.thumbnail}
+        articleID={rowData._id}
+        navigate={this.props.navigate}
+        theme={theme}
+      />
+    );
+  }
 
   render() {
-    const { refresh, loadMore } = this.props;
+    const { refresh, loadMore, theme } = this.props;
+    const styles = (theme === 'night') ? darkStyles : lightStyles;
 
     return (
       <ListView

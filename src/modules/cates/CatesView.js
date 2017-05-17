@@ -19,6 +19,7 @@ export default class CateView extends Component {
         color="#fff"
         style={{ paddingLeft: 5 }}
         backgroundColor="transparent"
+        underlayColor="transparent"
       />),
       tintColor: 'white',
       style: {
@@ -52,6 +53,7 @@ export default class CateView extends Component {
     hasNextPage: boolean,
     articles: Object,
     currentCateID: string,
+    currentTheme: string,
   }
 
   refreshHandle = () => {
@@ -76,6 +78,7 @@ export default class CateView extends Component {
       loaded,
       hasNextPage,
       navigate,
+      currentTheme,
       } = this.props;
 
     return (
@@ -88,6 +91,7 @@ export default class CateView extends Component {
           loadMore={this.loadMoreHandle}
           hasNextPage={hasNextPage}
           navigate={navigate}
+          theme={currentTheme}
         />
       </View>
     );

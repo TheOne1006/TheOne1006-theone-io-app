@@ -18,8 +18,10 @@ function SwitchThemeView({ switchNextTheme, theme }: SwitchThemeViewPropsType) {
       name="wb-sunny"
       size={24}
       color="#fff"
+      underlayColor="transparent"
       style={{ paddingLeft: 5 }}
       backgroundColor="transparent"
+      activeOpacity={0.7}
     >
       白天
     </Icon.Button>
@@ -28,9 +30,10 @@ function SwitchThemeView({ switchNextTheme, theme }: SwitchThemeViewPropsType) {
   const nightEle = (
     <Icon.Button
       onPress={() => switchNextTheme('light')}
-      name="brightness-2"
+      name="brightness-3"
       size={24}
       color="#fff"
+      underlayColor="transparent"
       style={{ paddingLeft: 5 }}
       backgroundColor="transparent"
     >

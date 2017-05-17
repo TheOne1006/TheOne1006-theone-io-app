@@ -25,6 +25,7 @@ export default class ArticleView extends Component {
         color="#fff"
         style={{ paddingLeft: 5 }}
         backgroundColor="transparent"
+        underlayColor="transparent"
       />),
       tintColor: 'white',
       style: {

@@ -4,9 +4,6 @@
 import { StyleSheet } from 'react-native';
 
 export const styleJson = {
-  text: {
-    color: '#FFFFFF',
-  },
   row: {
     flexDirection: 'row',
     flex: 1,

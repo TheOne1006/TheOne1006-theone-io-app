@@ -13,7 +13,8 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import SwitchTheme from '../switchTheme/SwitchThemeContainer';
-import styles from './themes/light';
+import lightStyles from './themes/light';
+import darkStyles from './themes/dark';
 
 const defaultAvatar = require('./imgs/defaultAvatar.png');
 
@@ -21,10 +22,13 @@ class DrawerView extends Component {
   props: {
     navigate: Function,
     cates: Object,
+    currentTheme: string,
   }
 
   render() {
-    const { cates, navigate } = this.props;
+    const { cates, navigate, currentTheme } = this.props;
+    const styles = (currentTheme === 'night') ? darkStyles : lightStyles;
+
     return (
       <View style={styles.root}>
         <View style={styles.avatar}>

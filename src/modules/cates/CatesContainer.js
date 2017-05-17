@@ -16,6 +16,7 @@ export default connect(
     loaded: globalState.getIn(['cate', 'loaded']),
     hasNextPage: globalState.getIn(['cate', 'hasNextPage']),
     currentCateID: globalState.getIn(['cate', 'currentCateID']),
+    currentTheme: globalState.getIn(['setting', 'theme']),
   }),
   dispatch => ({
     navigate: bindActionCreators(NavigationActions.navigate, dispatch),

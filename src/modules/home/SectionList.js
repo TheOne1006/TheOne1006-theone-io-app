@@ -11,7 +11,8 @@ import {
 
 import ArticleListItem from '../../components/ArticleListItem/ArticleListItem';
 import Banner from '../banner/BannerView';
-import styles from './themes/light';
+import lightStyles from './themes/light';
+import darkStyles from './themes/dark';
 
 const getSectionData = (dataBlob, sectionID) => dataBlob[sectionID];
 const getRowData = (dataBlob, sectionID, rowID) => dataBlob[rowID];
@@ -67,6 +68,7 @@ class SectionList extends Component {
   props: {
     sections: Object,
     navigate: Function,
+    theme: string,
   }
 
   firstSectionHeader: Object
@@ -77,22 +79,29 @@ class SectionList extends Component {
 
     if (offsetY <= 0) {
       nextOpacity = 0;
-    } else if (offsetY >= 150) {
+    } else if (offsetY >= 190) {
       nextOpacity = 1;
     } else {
-      nextOpacity = offsetY / 150;
+      nextOpacity = offsetY / 190;
     }
 
     if (nextOpacity !== firsetSectionBackGroundOpacity) {
+      const { theme } = this.props;
+      const styles = (theme === 'night') ? darkStyles : lightStyles;
       /**
        * FIXME: 跨组件修改
-       * @type {Array}
+       * FIXME: backgroundColor 硬编码
        */
+      let backgroundColor = '57, 186, 189,';
+      if (theme === 'night') {
+        backgroundColor = '105, 105, 105,';
+      }
+
       this.firstSectionHeader.setNativeProps({
         style: [
           styles.section,
           styles.sectionHeader,
-          { backgroundColor: `rgba(57, 186, 189, ${nextOpacity})` },
+          { backgroundColor: `rgba(${backgroundColor} ${nextOpacity})` },
         ],
       });
 
@@ -104,6 +113,7 @@ class SectionList extends Component {
 
   renderRow = (rowData: Object, sectionID: string, rowID: string): React.Element<any> => {
     const { firstSectionID, firstRowID } = this.state;
+    const { theme } = this.props;
 
     if (sectionID === firstSectionID && firstRowID === rowID) {
       return (
@@ -115,6 +125,7 @@ class SectionList extends Component {
             descript={rowData.descript}
             thumbnail={rowData.thumbnail}
             navigate={this.props.navigate}
+            theme={theme}
           />
         </View>
       );
@@ -127,21 +138,29 @@ class SectionList extends Component {
         descript={rowData.descript}
         thumbnail={rowData.thumbnail}
         navigate={this.props.navigate}
+        theme={theme}
       />
     );
   }
 
-  renderSeparator = (sectionID: string, rowID: string) => (
-    <View key={`${sectionID}-${rowID}-separator`} style={styles.separator} />
-  );
+  renderSeparator = (sectionID: string, rowID: string) => {
+    const { theme } = this.props;
+    const styles = (theme === 'night') ? darkStyles : lightStyles;
+    return (
+      <View key={`${sectionID}-${rowID}-separator`} style={styles.separator} />
+    );
+  }
 
   renderSectionHeader = (sectionData: string, sectionID: string) => {
+    const { theme } = this.props;
+    const styles = (theme === 'night') ? darkStyles : lightStyles;
+
     const { firstSectionID } = this.state;
     if (firstSectionID === sectionID) {
       return (
         <View
           ref={e => (this.firstSectionHeader = e)}
-          style={[styles.section, styles.sectionHeader, { backgroundColor: 'rgba(57, 186, 189, 0)' }]}
+          style={[styles.section, styles.sectionHeader]}
         >
           <Text style={styles.text}>
             {sectionData}
@@ -160,6 +179,9 @@ class SectionList extends Component {
   // renderHeader = () => (<Banner />)
 
   render() {
+    const { theme } = this.props;
+    const styles = (theme === 'night') ? darkStyles : lightStyles;
+
     return (
       <ListView
         style={styles.listview}

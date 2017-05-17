@@ -12,6 +12,7 @@ export default connect(
     sections: globalState.getIn(['home', 'results']),
     loading: globalState.getIn(['home', 'loading']),
     loaded: globalState.getIn(['home', 'loaded']),
+    currentTheme: globalState.getIn(['setting', 'theme']),
   }),
   dispatch => ({
     navigate: bindActionCreators(NavigationActions.navigate, dispatch),

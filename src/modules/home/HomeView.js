@@ -12,7 +12,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import SectionList from './SectionList';
 import FixButton from './FixButton';
-import styles from './themes/light';
+import lightStyles from './themes/light';
+import darkStyles from './themes/dark';
+
 
 export default class HomeView extends Component {
   static navigationOptions = {
@@ -25,6 +27,7 @@ export default class HomeView extends Component {
         color="#fff"
         style={{ paddingLeft: 5 }}
         backgroundColor="transparent"
+        underlayColor="transparent"
       />),
       tintColor: 'white',
       style: {
@@ -53,16 +56,21 @@ export default class HomeView extends Component {
     loaded: boolean,
     navigate: Function,
     navigation: Object,
+    currentTheme: string,
   }
 
   render() {
-    const { sections, loading, loaded, navigate, navigation } = this.props;
+    const { sections, loading, loaded, navigate, navigation, currentTheme } = this.props;
+
+    const styles = (currentTheme === 'night') ? darkStyles : lightStyles;
+
     if (!loading && loaded) {
       return (
         <View style={styles.root}>
           <SectionList
             sections={sections}
             navigate={navigate}
+            theme={currentTheme}
           />
           <FixButton navigation={navigation} />
         </View>

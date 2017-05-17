@@ -36,12 +36,13 @@ export const styleJson = {
     justifyContent: 'center',
     alignItems: 'center',
     padding: 6,
-    backgroundColor: '#39babd',
+    backgroundColor: 'rgb(57, 186, 189)',
     height: 44,
   },
   sectionHeader: {
     marginBottom: -44,
     zIndex: 999,
+    backgroundColor: 'transparent',
   },
   fixButton: {
     position: 'absolute',
