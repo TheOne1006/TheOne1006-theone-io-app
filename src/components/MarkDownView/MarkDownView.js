@@ -85,6 +85,8 @@ class MarkDownView extends Component {
               SafariView.isAvailable()
                 .then(SafariView.show({
                   url,
+                  barTintColor: '#39babd',
+                  tintColor: '#FFFFFF',
                 }))
                 .catch((error) => {
                   // Fallback WebView code for iOS 8 and earlier

@@ -22,6 +22,12 @@ class SectionList extends Component {
   state = {
     dataSource: {},
     headerPressCount: 0,
+    firstRowID: '',
+    firstSectionID: '',
+    firsetSectionBackGroundOpacity: 0,
+    dataBlob: {},
+    sectionIDs: [],
+    rowIDs: [],
   };
 
   componentWillMount() {
@@ -36,6 +42,8 @@ class SectionList extends Component {
     const dataBlob = {};
     const sectionIDs = [];
     const rowIDs = [];
+    const firstRowID = sections.getIn([0, 'articles', 0, '_id']);
+    const firstSectionID = sections.getIn([0, 'title']);
 
     sections.map((section, index) => {
       const title = section.get('title');
@@ -50,6 +58,8 @@ class SectionList extends Component {
     });
 
     this.setState({
+      firstRowID,
+      firstSectionID,
       dataSource: dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs),
     });
   }
@@ -59,36 +69,102 @@ class SectionList extends Component {
     navigate: Function,
   }
 
-  renderRow = (rowData: Object): React.Element<any> => (
-    <ArticleListItem
-      articleID={rowData._id}
-      title={rowData.title}
-      descript={rowData.descript}
-      thumbnail={rowData.thumbnail}
-      navigate={this.props.navigate}
-    />
-  );
+  firstSectionHeader: Object
+
+  handleChageFirsetSectionBackgroundOnScroll = (offsetY: number) => {
+    const { firsetSectionBackGroundOpacity } = this.state;
+    let nextOpacity = firsetSectionBackGroundOpacity;
+
+    if (offsetY <= 0) {
+      nextOpacity = 0;
+    } else if (offsetY >= 150) {
+      nextOpacity = 1;
+    } else {
+      nextOpacity = offsetY / 150;
+    }
+
+    if (nextOpacity !== firsetSectionBackGroundOpacity) {
+      /**
+       * FIXME: 跨组件修改
+       * @type {Array}
+       */
+      this.firstSectionHeader.setNativeProps({
+        style: [
+          styles.section,
+          styles.sectionHeader,
+          { backgroundColor: `rgba(57, 186, 189, ${nextOpacity})` },
+        ],
+      });
+
+      this.setState({
+        firsetSectionBackGroundOpacity: nextOpacity,
+      });
+    }
+  }
+
+  renderRow = (rowData: Object, sectionID: string, rowID: string): React.Element<any> => {
+    const { firstSectionID, firstRowID } = this.state;
+
+    if (sectionID === firstSectionID && firstRowID === rowID) {
+      return (
+        <View>
+          <Banner />
+          <ArticleListItem
+            articleID={rowData._id}
+            title={rowData.title}
+            descript={rowData.descript}
+            thumbnail={rowData.thumbnail}
+            navigate={this.props.navigate}
+          />
+        </View>
+      );
+    }
+
+    return (
+      <ArticleListItem
+        articleID={rowData._id}
+        title={rowData.title}
+        descript={rowData.descript}
+        thumbnail={rowData.thumbnail}
+        navigate={this.props.navigate}
+      />
+    );
+  }
 
   renderSeparator = (sectionID: string, rowID: string) => (
     <View key={`${sectionID}-${rowID}-separator`} style={styles.separator} />
   );
 
-  renderSectionHeader = (sectionData: string) => (
-    <View style={styles.section}>
-      <Text style={styles.text}>
-        {sectionData}
-      </Text>
-    </View>
-  );
-
-  renderHeader = () => (<Banner />)
+  renderSectionHeader = (sectionData: string, sectionID: string) => {
+    const { firstSectionID } = this.state;
+    if (firstSectionID === sectionID) {
+      return (
+        <View
+          ref={e => (this.firstSectionHeader = e)}
+          style={[styles.section, styles.sectionHeader, { backgroundColor: 'rgba(57, 186, 189, 0)' }]}
+        >
+          <Text style={styles.text}>
+            {sectionData}
+          </Text>
+        </View>
+      );
+    }
+    return (
+      <View style={[styles.section]}>
+        <Text style={styles.text}>
+          {sectionData}
+        </Text>
+      </View>
+    );
+  }
+  // renderHeader = () => (<Banner />)
 
   render() {
     return (
       <ListView
         style={styles.listview}
         dataSource={this.state.dataSource}
-        renderHeader={this.renderHeader}
+        // renderHeader={this.renderHeader}
         enableEmptySections
         renderSectionHeader={this.renderSectionHeader}
         renderRow={this.renderRow}
@@ -97,6 +173,12 @@ class SectionList extends Component {
         pageSize={4}
         scrollRenderAheadDistance={500}
         stickySectionHeadersEnabled
+        bounces
+        scrollEventThrottle={20}
+        onScroll={(event: Object) => {
+          const offsetY = event.nativeEvent.contentOffset.y;
+          this.handleChageFirsetSectionBackgroundOnScroll(offsetY);
+        }}
       />
     );
   }

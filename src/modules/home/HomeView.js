@@ -11,6 +11,8 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import SectionList from './SectionList';
+import FixButton from './FixButton';
+import styles from './themes/light';
 
 export default class HomeView extends Component {
   static navigationOptions = {
@@ -28,6 +30,7 @@ export default class HomeView extends Component {
       style: {
         backgroundColor: '#39babd',
       },
+      visible: false,
     }),
     tabBar: () => ({
       icon: props => (
@@ -49,16 +52,20 @@ export default class HomeView extends Component {
     loading: boolean,
     loaded: boolean,
     navigate: Function,
+    navigation: Object,
   }
 
   render() {
-    const { sections, loading, loaded, navigate } = this.props;
+    const { sections, loading, loaded, navigate, navigation } = this.props;
     if (!loading && loaded) {
       return (
-        <SectionList
-          sections={sections}
-          navigate={navigate}
-        />
+        <View style={styles.root}>
+          <SectionList
+            sections={sections}
+            navigate={navigate}
+          />
+          <FixButton navigation={navigation} />
+        </View>
       );
     }
 

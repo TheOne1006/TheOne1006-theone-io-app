@@ -1,3 +1,9 @@
+> 20170517
+
+* 解决 sectionHeader 渐变背景的问题
+  * 使用 setNativeProps 和 ref
+* safari 统一颜色
+
 > 20170516
 
 * debug safari 打开 a 连接的相关地址

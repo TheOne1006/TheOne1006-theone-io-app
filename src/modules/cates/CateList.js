@@ -14,11 +14,6 @@ import {
 import ArticleListItem from '../../components/ArticleListItem/ArticleListItem';
 import styles from './themes/light';
 
-const rowHasChanged = (row1, row2) => row1 !== row2;
-const dataSource = new ListView.DataSource({
-  rowHasChanged,
-});
-
 type CateListPropsType = {
   articles: Object,
   loaded: boolean,
@@ -37,6 +32,11 @@ class CateList extends Component {
 
   componentWillMount() {
     const { articles } = this.props;
+    const rowHasChanged = (row1, row2) => row1 !== row2;
+    const dataSource = new ListView.DataSource({
+      rowHasChanged,
+    });
+
     this.setState({
       dataSource: dataSource.cloneWithRows(articles.toJS()),
     });
@@ -49,6 +49,7 @@ class CateList extends Component {
 
     if (nextLoaded === true && nextLoading === false && loading === true) {
       const nextArticle = nextProps.articles;
+      const { dataSource } = this.state;
       this.setState({
         dataSource: dataSource.cloneWithRows(nextArticle.toJS()),
       });
