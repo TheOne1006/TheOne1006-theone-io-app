@@ -118,10 +118,6 @@ class SectionList extends Component {
         backgroundColor = '105, 105, 105,';
       }
 
-      console.log(this.firstSectionHeader);
-      console.log(nextOpacity);
-      console.log(firsetSectionBackGroundOpacity);
-
       this.firstSectionHeader.setNativeProps({
         style: [
           styles.section,
