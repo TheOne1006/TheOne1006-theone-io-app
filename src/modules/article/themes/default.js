@@ -1,9 +1,7 @@
 /**
  * @flow
  */
-import { StyleSheet, PixelRatio } from 'react-native';
-
-const minPixel = 1 / PixelRatio.get();
+import { StyleSheet } from 'react-native';
 
 export const styleJson = {
   thumbnail: {

@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import NavigatorView from './NavigatorView';
 
 export default connect(
-  state => ({
-    navigatorState: state.get('navigatorState').toJS(),
+  globalState => ({
+    navigatorState: globalState.get('navigatorState').toJS(),
+    theme: globalState.getIn(['setting', 'theme']),
   }),
 )(NavigatorView);

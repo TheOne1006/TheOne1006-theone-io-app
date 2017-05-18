@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import styles from './themes/light';
+import lightStyles from './themes/light';
+import darkStyles from './themes/dark';
 
 import MarkDownView from '../../components/MarkDownView/MarkDownView';
 
@@ -29,7 +30,7 @@ export default class ArticleView extends Component {
       />),
       tintColor: 'white',
       style: {
-        backgroundColor: '#39babd',
+        backgroundColor: navigation.headerBackground,
       },
     }),
     tabBar: () => ({
@@ -56,8 +57,14 @@ export default class ArticleView extends Component {
   }
 
   render() {
-    const { article, currentArticleID, navigation: { state } } = this.props;
+    const {
+      article,
+      currentArticleID,
+      navigation: { state, theme, headerBackground },
+    } = this.props;
     const articleID = state.params.articleID;
+
+    const styles = (theme === 'night') ? darkStyles : lightStyles;
 
     return (
       <ScrollView>
@@ -71,7 +78,11 @@ export default class ArticleView extends Component {
                 />
               </View>
               <View>
-                <MarkDownView content={article.get('content')} />
+                <MarkDownView
+                  content={article.get('content')}
+                  theme={theme}
+                  barTintColor={headerBackground}
+                />
               </View>
             </View>
           ) : null

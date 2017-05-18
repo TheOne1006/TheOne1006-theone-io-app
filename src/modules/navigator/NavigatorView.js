@@ -7,6 +7,8 @@ import React, { Component } from 'react';
 import { addNavigationHelpers } from 'react-navigation';
 
 import AppNavigator from './Navigator';
+import { styleJson as darkStyleJson } from './themes/dark';
+import { styleJson as lightStyleJson } from './themes/light';
 
 class NavigatorView extends Component {
   static displayName = 'NavigationView';
@@ -20,17 +22,21 @@ class NavigatorView extends Component {
         key: string,
         routeName: string
       }>
-    }
+    },
+    theme: string,
   }
 
   render() {
-    const { dispatch, navigatorState } = this.props;
+    const { dispatch, navigatorState, theme } = this.props;
+    const styleJson = (theme === 'night') ? darkStyleJson : lightStyleJson;
     return (
       <AppNavigator
         navigation={
           addNavigationHelpers({
             dispatch,
             state: navigatorState,
+            theme,
+            headerBackground: styleJson.header.backgroundColor,
           })
         }
       />

@@ -1,5 +1,14 @@
-import { StyleSheet } from 'react-navigation';
+import { StyleSheet } from 'react-native';
+import { styleJson as defaultStyleJson } from './default';
 
-const darkStyles = StyleSheet.create({});
+export const styleJson = {
+  ...defaultStyleJson,
+  header: {
+    ...defaultStyleJson.header,
+    backgroundColor: 'dimgray',
+  },
+};
+
+const darkStyles = StyleSheet.create(styleJson);
 
 export default darkStyles;

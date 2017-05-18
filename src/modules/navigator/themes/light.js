@@ -1,5 +1,10 @@
-import { StyleSheet } from 'react-navigation';
+import { StyleSheet } from 'react-native';
+import { styleJson as defaultStyleJson } from './default';
 
-const lightStyles = StyleSheet.create({});
+export const styleJson = {
+  ...defaultStyleJson,
+};
+
+const lightStyles = StyleSheet.create(styleJson);
 
 export default lightStyles;

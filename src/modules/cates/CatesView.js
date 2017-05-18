@@ -23,7 +23,7 @@ export default class CateView extends Component {
       />),
       tintColor: 'white',
       style: {
-        backgroundColor: '#39babd',
+        backgroundColor: navigation.headerBackground,
       },
     }),
     tabBar: () => ({

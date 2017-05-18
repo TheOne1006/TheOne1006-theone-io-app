@@ -8,6 +8,7 @@ import {
   View,
   ListView,
 } from 'react-native';
+import { cloneDeep } from 'lodash';
 
 import ArticleListItem from '../../components/ArticleListItem/ArticleListItem';
 import Banner from '../banner/BannerView';
@@ -17,7 +18,13 @@ import darkStyles from './themes/dark';
 const getSectionData = (dataBlob, sectionID) => dataBlob[sectionID];
 const getRowData = (dataBlob, sectionID, rowID) => dataBlob[rowID];
 const rowHasChanged = (row1, row2) => row1 !== row2;
-const sectionHeaderHasChanged = (s1, s2) => s1 !== s2;
+const sectionHeaderHasChanged = (s1, s2) => s2 !== s1;
+
+type SectionListPropsType = {
+  sections: Object,
+  navigate: Function,
+  theme: string,
+}
 
 class SectionList extends Component {
   state = {
@@ -49,7 +56,7 @@ class SectionList extends Component {
     sections.map((section, index) => {
       const title = section.get('title');
       sectionIDs.push(title);
-      dataBlob[title] = title;
+      dataBlob[title] = { title };
       const articles = section.get('articles').toJS() || [];
       rowIDs[index] = articles.map((article) => {
         dataBlob[article._id] = article;
@@ -62,14 +69,28 @@ class SectionList extends Component {
       firstRowID,
       firstSectionID,
       dataSource: dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs),
+      dataBlob,
+      sectionIDs,
+      rowIDs,
     });
   }
 
-  props: {
-    sections: Object,
-    navigate: Function,
-    theme: string,
+  componentWillReceiveProps(nextProps: SectionListPropsType) {
+    /**
+     * FIXME: 深度克隆原数据
+     */
+    const { theme } = this.props;
+    const nextTheme = nextProps.theme;
+    if (theme !== nextTheme) {
+      const { dataSource, dataBlob, sectionIDs, rowIDs } = this.state;
+      const nextDataBlob = cloneDeep(dataBlob);
+      this.setState({
+        dataSource: dataSource.cloneWithRowsAndSections(nextDataBlob, sectionIDs, rowIDs),
+      });
+    }
   }
+
+  props: SectionListPropsType
 
   firstSectionHeader: Object
 
@@ -96,6 +117,10 @@ class SectionList extends Component {
       if (theme === 'night') {
         backgroundColor = '105, 105, 105,';
       }
+
+      console.log(this.firstSectionHeader);
+      console.log(nextOpacity);
+      console.log(firsetSectionBackGroundOpacity);
 
       this.firstSectionHeader.setNativeProps({
         style: [
@@ -151,19 +176,32 @@ class SectionList extends Component {
     );
   }
 
-  renderSectionHeader = (sectionData: string, sectionID: string) => {
+  renderSectionHeader = (sectionData: Object, sectionID: string) => {
     const { theme } = this.props;
     const styles = (theme === 'night') ? darkStyles : lightStyles;
 
-    const { firstSectionID } = this.state;
+    const { firstSectionID, firsetSectionBackGroundOpacity } = this.state;
     if (firstSectionID === sectionID) {
+      /**
+       * FIXME: 跨组件修改
+       * FIXME: backgroundColor 硬编码
+       */
+      let backgroundColor = '57, 186, 189,';
+      if (theme === 'night') {
+        backgroundColor = '105, 105, 105,';
+      }
+
       return (
         <View
           ref={e => (this.firstSectionHeader = e)}
-          style={[styles.section, styles.sectionHeader]}
+          style={[
+            styles.section,
+            styles.sectionHeader,
+            { backgroundColor: `rgba(${backgroundColor} ${firsetSectionBackGroundOpacity})` },
+          ]}
         >
           <Text style={styles.text}>
-            {sectionData}
+            {sectionData.title}
           </Text>
         </View>
       );
@@ -171,7 +209,7 @@ class SectionList extends Component {
     return (
       <View style={[styles.section]}>
         <Text style={styles.text}>
-          {sectionData}
+          {sectionData.title}
         </Text>
       </View>
     );
@@ -196,7 +234,7 @@ class SectionList extends Component {
         scrollRenderAheadDistance={500}
         stickySectionHeadersEnabled
         bounces
-        scrollEventThrottle={20}
+        // scrollEventThrottle={80}
         onScroll={(event: Object) => {
           const offsetY = event.nativeEvent.contentOffset.y;
           this.handleChageFirsetSectionBackgroundOnScroll(offsetY);

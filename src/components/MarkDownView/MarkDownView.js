@@ -44,8 +44,9 @@ class MarkDownView extends Component {
   }
 
   props: {
-    theme?: ?string,
+    theme: string,
     content: string,
+    barTintColor: string,
   }
 
   handleChangeHeight = (height: number) => {
@@ -57,10 +58,10 @@ class MarkDownView extends Component {
   }
 
   render() {
-    const { theme, content } = this.props;
+    const { theme, content, barTintColor } = this.props;
     const { warrperHeihgt } = this.state;
     const htmlText = marked(content, { renderer });
-    const styles = (theme === 'dark') ? darkStyles : lightStyles;
+    const styles = (theme === 'night') ? darkStyles : lightStyles;
 
     // console.log(htmlText);
     return (
@@ -70,7 +71,7 @@ class MarkDownView extends Component {
           bounces={false}
           scrollEnabled={false}
           javaScriptEnabled
-          source={{ html: HtmlRender(htmlText) }}
+          source={{ html: HtmlRender(htmlText, theme) }}
           scalesPageToFit={false}
           canGoBack
           onNavigationStateChange={(info) => {
@@ -85,7 +86,7 @@ class MarkDownView extends Component {
               SafariView.isAvailable()
                 .then(SafariView.show({
                   url,
-                  barTintColor: '#39babd',
+                  barTintColor,
                   tintColor: '#FFFFFF',
                 }))
                 .catch((error) => {

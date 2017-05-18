@@ -3,6 +3,10 @@ import { styleJson as defaultStyleJson } from './default';
 
 export const styleJson = {
   ...defaultStyleJson,
+  webViewContainer: {
+    ...defaultStyleJson.webViewContainer,
+    backgroundColor: '#808080',
+  },
 };
 
 const darkStyles = StyleSheet.create(styleJson);

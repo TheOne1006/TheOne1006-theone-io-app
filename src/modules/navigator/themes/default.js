@@ -1,6 +1,13 @@
-import { StyleSheet } from 'react-navigation';
+/**
+ * @flow
+ */
+import { StyleSheet } from 'react-native';
 
-export const styleJson = {};
+export const styleJson = {
+  header: {
+    backgroundColor: '#39babd',
+  },
+};
 
 const defaultStyles = StyleSheet.create(styleJson);
 
