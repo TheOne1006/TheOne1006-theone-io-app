@@ -1,3 +1,8 @@
+> 20170522
+
+* 增加 Image loading
+* 增加 ART lib for IOS <http://www.zhwios.cn/2016/07/28/reactnative-no-component-found-for-view-with-name-artsurfaceview/>
+
 > 20170518
 
 * 完善 theme 切换

@@ -62,6 +62,12 @@ export const styleJson = {
     borderBottomWidth: minPixel,
     borderBottomColor: '#CCCCCC',
   },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+  },
 };
 
 const defaultStyles = StyleSheet.create(styleJson);

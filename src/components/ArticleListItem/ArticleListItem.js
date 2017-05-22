@@ -5,9 +5,10 @@ import React from 'react';
 import {
   View,
   Text,
-  Image,
   TouchableOpacity,
 } from 'react-native';
+import Image from 'react-native-image-progress';
+import * as Progress from 'react-native-progress';
 import lightStyles from './themes/light';
 import darkStyles from './themes/dark';
 
@@ -49,6 +50,7 @@ const ArticleListItem = ({
             source={{
               uri: `https:${thumbnail}`,
             }}
+            indicator={Progress.Circle}
           />
         ) : null
       }

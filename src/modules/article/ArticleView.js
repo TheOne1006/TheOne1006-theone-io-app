@@ -5,11 +5,13 @@
 import React, { Component } from 'react';
 import {
   View,
-  Image,
   ScrollView,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Image from 'react-native-image-progress';
+import * as Progress from 'react-native-progress';
+
 import lightStyles from './themes/light';
 import darkStyles from './themes/dark';
 
@@ -75,6 +77,7 @@ export default class ArticleView extends Component {
                 <Image
                   source={{ uri: `https:${article.get('thumbnail')}` }}
                   style={styles.thumbnail}
+                  indicator={Progress.Circle}
                 />
               </View>
               <View>
