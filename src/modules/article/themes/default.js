@@ -8,6 +8,9 @@ export const styleJson = {
     backgroundColor: '#FFFFFF',
     height: 250,
   },
+  flex: {
+    flex: 1,
+  },
 };
 
 const defaultStyles = StyleSheet.create(styleJson);

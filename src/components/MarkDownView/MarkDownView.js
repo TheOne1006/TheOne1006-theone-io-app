@@ -76,6 +76,8 @@ class MarkDownView extends Component {
           canGoBack
           onNavigationStateChange={(info) => {
             const WebViewHeight = info.url.replace('about:blank%23', '') / 1;
+            console.log(info);
+            console.log('WebViewHeight');
             if (WebViewHeight) {
               this.handleChangeHeight(WebViewHeight - 0);
             }
