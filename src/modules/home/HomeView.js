@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 
-import ProgressBar from 'react-native-progress/Bar';
+import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import SectionList from './SectionList';
@@ -80,7 +80,7 @@ export default class HomeView extends Component {
 
     return (
       <View style={styles.loading}>
-        <ProgressBar progress={0.3} width={200} />
+        <Progress.Circle size={30} indeterminate />
       </View>
     );
   }

@@ -1,8 +1,9 @@
 /**
  * @flow
  */
-import { StyleSheet, PixelRatio } from 'react-native';
+import { StyleSheet, PixelRatio, Dimensions } from 'react-native';
 
+const { height } = Dimensions.get('window');
 const minPixel = 1 / PixelRatio.get();
 
 export const styleJson = {
@@ -63,7 +64,7 @@ export const styleJson = {
     borderBottomColor: '#CCCCCC',
   },
   loading: {
-    flex: 1,
+    height,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
