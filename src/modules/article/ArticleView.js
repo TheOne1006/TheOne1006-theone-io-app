@@ -18,29 +18,22 @@ import darkStyles from './themes/dark';
 import MarkDownView from '../../components/MarkDownView/MarkDownView';
 
 export default class ArticleView extends Component {
-  static navigationOptions = {
-    title: ({ state }) => (state.params.title || 'Article'),
-    header: navigation => ({
-      left: (<Icon.Button
-        onPress={() => navigation.goBack()}
-        name="navigate-before"
-        size={24}
-        color="#fff"
-        style={{ paddingLeft: 5 }}
-        backgroundColor="transparent"
-        underlayColor="transparent"
-      />),
-      tintColor: 'white',
-      style: {
-        backgroundColor: navigation.headerBackground,
-      },
-    }),
-    tabBar: () => ({
-      icon: props => (
-        <Icon name="home" size={24} color={props.tintColor} />
-      ),
-    }),
-  }
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.state.params.title || 'Article',
+    headerTintColor: 'white',
+    headerLeft: (<Icon.Button
+      onPress={() => navigation.goBack()}
+      name="navigate-before"
+      size={24}
+      color="#fff"
+      style={{ paddingLeft: 5 }}
+      backgroundColor="transparent"
+      underlayColor="transparent"
+    />),
+    headerStyle: {
+      backgroundColor: navigation.headerBackground,
+    },
+  })
 
   componentWillMount() {
     const { resultsRequest, currentArticleID, loaded, navigation: { state } } = this.props;

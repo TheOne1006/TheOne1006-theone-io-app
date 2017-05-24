@@ -9,29 +9,22 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import CateList from './CateList';
 
 export default class CateView extends Component {
-  static navigationOptions = {
-    title: ({ state }) => (state.params.title || 'Cate'),
-    header: navigation => ({
-      left: (<Icon.Button
-        onPress={() => navigation.goBack()}
-        name="navigate-before"
-        size={24}
-        color="#fff"
-        style={{ paddingLeft: 5 }}
-        backgroundColor="transparent"
-        underlayColor="transparent"
-      />),
-      tintColor: 'white',
-      style: {
-        backgroundColor: navigation.headerBackground,
-      },
-    }),
-    tabBar: () => ({
-      icon: props => (
-        <Icon name="home" size={24} color={props.tintColor} />
-      ),
-    }),
-  }
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.state.params.title || 'Cate',
+    headerTintColor: 'white',
+    headerLeft: (<Icon.Button
+      onPress={() => navigation.goBack()}
+      name="navigate-before"
+      size={24}
+      color="#fff"
+      style={{ paddingLeft: 5 }}
+      backgroundColor="transparent"
+      underlayColor="transparent"
+    />),
+    headerStyle: {
+      backgroundColor: navigation.headerBackground,
+    },
+  })
 
   componentWillMount() {
     const { resultsRequest, currentCateID, loaded, navigation: { state } } = this.props;

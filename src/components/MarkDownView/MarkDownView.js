@@ -5,6 +5,8 @@ import React, { Component } from 'react';
 import {
   View,
   WebView,
+  Platform,
+  Linking,
 } from 'react-native';
 
 import marked from 'marked';
@@ -60,10 +62,14 @@ class MarkDownView extends Component {
   render() {
     const { theme, content, barTintColor } = this.props;
     const { warrperHeihgt } = this.state;
-    const htmlText = marked(content, { renderer });
+    let htmlText = marked(content, { renderer });
     const styles = (theme === 'night') ? darkStyles : lightStyles;
 
-    // console.log(htmlText);
+    if (Platform.OS !== 'ios') {
+      // FIXME: android pre 中不会 根据 \n 换行
+      htmlText = htmlText.replace(/\n/g, '<br>');
+    }
+
     return (
       <View>
         <WebView
@@ -75,26 +81,28 @@ class MarkDownView extends Component {
           scalesPageToFit={false}
           canGoBack
           onNavigationStateChange={(info) => {
-            const WebViewHeight = info.url.replace('about:blank%23', '') / 1;
-            console.log(info);
-            console.log('WebViewHeight');
+            // const WebViewHeight = info.url.replace('about:blank%23', '') / 1;
+            const WebViewHeight = info.title / 1;
+            // console.log(WebViewHeight);
             if (WebViewHeight) {
               this.handleChangeHeight(WebViewHeight - 0);
             }
           }}
           onMessage={(e) => {
             const url = e.nativeEvent.data;
-            if (url) {
+            if (url && Platform.OS === 'ios') {
               SafariView.isAvailable()
                 .then(SafariView.show({
                   url,
                   barTintColor,
                   tintColor: '#FFFFFF',
-                }))
-                .catch((error) => {
-                  // Fallback WebView code for iOS 8 and earlier
-                  console.log(error);
-                });
+                }));
+                // .catch((error) => {
+                //   // Fallback WebView code for iOS 8 and earlier
+                //   // console.log(error);
+                // });
+            } else if (url) {
+              Linking.openURL(url);
             }
           }}
         />

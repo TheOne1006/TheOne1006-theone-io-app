@@ -14,30 +14,22 @@ import darkStyles from './themes/dark';
 
 
 export default class HomeView extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation, screenProps }) => ({
     title: 'TheOne.io',
-    header: navigation => ({
-      left: (<Icon.Button
-        onPress={() => navigation.navigate('DrawerOpen')}
-        name="dehaze"
-        size={24}
-        color="#fff"
-        style={{ paddingLeft: 5 }}
-        backgroundColor="transparent"
-        underlayColor="transparent"
-      />),
-      tintColor: 'white',
-      style: {
-        backgroundColor: navigation.headerBackground,
-      },
-      visible: true,
-    }),
-    tabBar: () => ({
-      icon: props => (
-        <Icon name="home" size={24} color={props.tintColor} />
-      ),
-    }),
-  }
+    headerTintColor: 'white',
+    headerLeft: (<Icon.Button
+      onPress={() => navigation.navigate('DrawerOpen')}
+      name="dehaze"
+      size={24}
+      color="#fff"
+      style={{ paddingLeft: 5 }}
+      backgroundColor="transparent"
+      underlayColor="transparent"
+    />),
+    headerStyle: {
+      backgroundColor: screenProps.headerBackground,
+    },
+  })
 
   componentWillMount() {
     const { resultsRequest, loaded, loading } = this.props;
@@ -52,21 +44,21 @@ export default class HomeView extends Component {
     loading: boolean,
     loaded: boolean,
     navigate: Function,
-    navigation: Object,
     currentTheme: string,
   }
 
   render() {
-    const { sections, loading, loaded, navigate, navigation, currentTheme } = this.props;
+    const { sections, loading, loaded, navigate, currentTheme } = this.props;
 
     const styles = (currentTheme === 'night') ? darkStyles : lightStyles;
+    const backgroundColor = (currentTheme === 'night') ? 'dimgray' : '#39babd';
 
     if (!loading && loaded) {
       return (
         <View>
           <StatusBar
             translucent={false}
-            backgroundColor={navigation.headerBackground}
+            backgroundColor={backgroundColor}
             barStyle="light-content"
           />
           <SectionList

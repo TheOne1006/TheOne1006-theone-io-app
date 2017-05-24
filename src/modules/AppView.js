@@ -55,7 +55,7 @@ class AppView extends Component {
     return (
       <View style={{ flex: 1 }}>
         <StatusBar
-          translucent
+          translucent={false}
           backgroundColor="rgba(0, 0, 0, 0.2)"
           barStyle="light-content"
         />

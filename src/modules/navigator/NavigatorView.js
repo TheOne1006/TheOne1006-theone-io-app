@@ -31,6 +31,10 @@ class NavigatorView extends Component {
     const styleJson = (theme === 'night') ? darkStyleJson : lightStyleJson;
     return (
       <AppNavigator
+        screenProps={{
+          theme,
+          headerBackground: styleJson.header.backgroundColor,
+        }}
         navigation={
           addNavigationHelpers({
             dispatch,

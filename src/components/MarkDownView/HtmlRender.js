@@ -850,8 +850,6 @@ const htmlRender = (html: string, theme: string) => (
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <style>
       ${(theme === 'night') ? (darkStyles) : (lightStyles)}
-
-
       </style>
     </head>
     <body class='markdown-body'>
@@ -861,6 +859,7 @@ const htmlRender = (html: string, theme: string) => (
   <script>
     window.onload = function(){
       var height = document.body.clientHeight;
+      document.title = height;
       window.location.hash = '#' + height;
 
       var links = document.getElementsByClassName('link');

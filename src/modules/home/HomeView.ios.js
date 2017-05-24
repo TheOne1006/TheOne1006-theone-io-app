@@ -15,30 +15,10 @@ import darkStyles from './themes/dark';
 
 
 export default class HomeView extends Component {
-  static navigationOptions = {
+  static navigationOptions = () => ({
     title: 'TheOne.io',
-    header: navigation => ({
-      left: (<Icon.Button
-        onPress={() => navigation.navigate('DrawerOpen')}
-        name="dehaze"
-        size={24}
-        color="#fff"
-        style={{ paddingLeft: 5 }}
-        backgroundColor="transparent"
-        underlayColor="transparent"
-      />),
-      tintColor: 'white',
-      style: {
-        backgroundColor: '#39babd',
-      },
-      visible: true,
-    }),
-    tabBar: () => ({
-      icon: props => (
-        <Icon name="home" size={24} color={props.tintColor} />
-      ),
-    }),
-  }
+    header: null,
+  })
 
   componentWillMount() {
     const { resultsRequest, loaded, loading } = this.props;
